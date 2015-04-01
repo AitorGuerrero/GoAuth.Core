@@ -4,6 +4,7 @@ type SqlDbConfig struct {
 	Name string
 	UserName string
 	Password string
+	Host string
 }
 
 type KiteServiceConfig struct {

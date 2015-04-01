@@ -1,7 +1,7 @@
 package kite
 
 import (
-	"github.com/AitorGuerrero/BadassCity/user/services/isValid"
+	"github.com/AitorGuerrero/User/services/isValid"
 
 	"github.com/koding/kite"
 )

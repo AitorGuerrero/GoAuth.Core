@@ -3,9 +3,10 @@ package config
 func Get() Config {
 	return Config {
 		SqlDbConfig {
-			Name: "badass-city",
+			Name: "BadassCity.Users",
 			UserName: "root",
-			Password: "devpassword",
+			Password: "",
+			Host: "http://localhost",
 		},
 		KiteServiceConfig {
 			Name: "BaddassCity.user",

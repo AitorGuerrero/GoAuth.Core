@@ -1,7 +1,7 @@
 package isValid
 
 import (
-	"github.com/AitorGuerrero/BadassCity/user"
+	"github.com/AitorGuerrero/User"
 
 	"code.google.com/p/go-uuid/uuid"
 )
