@@ -1,8 +1,4 @@
-package user
-
-import (
-	"code.google.com/p/go-uuid/uuid"
-)
+package User
 
 type SerializedUser struct {
 	Id string
@@ -11,7 +7,7 @@ type SerializedUser struct {
 	AuthHash string
 }
 
-func (aUser *user) serialize () interface{} {
+func (aUser *user) Serialize () interface{} {
 	return &SerializedUser {
 		Id: string(aUser.id),
 		Name: aUser.name,
@@ -20,9 +16,9 @@ func (aUser *user) serialize () interface{} {
 	}
 }
 
-func (aUser *SerializedUser) unserialize () *user {
+func (aUser *SerializedUser) Unserialize () *user {
 	return &user {
-		id: uuid.UUID(aUser.Id),
+		id: id(aUser.Id),
 		name: aUser.Name,
 		email: aUser.Email,
 		authHash: authHash(aUser.AuthHash),

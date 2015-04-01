@@ -1,13 +1,16 @@
 package config
 
-type Config struct {
-	DbName string
-	DbUserName string
-	DbPassword string
-	ServiceName string
-	ServiceVersion string
-	ServicePort int
-	ServiceClientName string
-	ServiceClientVersion string
-	ServiceClientPort int
+func Get() Config {
+	return Config {
+		SqlDbConfig {
+			Name: "badass-city",
+			UserName: "root",
+			Password: "devpassword",
+		},
+		KiteServiceConfig {
+			Name: "BaddassCity.user",
+			Version: "0.0.1",
+			Port: 3635,
+		},
+	}
 }

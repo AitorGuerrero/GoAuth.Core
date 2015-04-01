@@ -1,4 +1,4 @@
-package user
+package User
 
 import (
 	"code.google.com/p/go-uuid/uuid"
@@ -8,19 +8,22 @@ var aRepo repository
 
 type authHash string
 
+type id uuid.UUID
+
 type user struct {
-	id uuid.UUID
+	id id
 	name string
 	email string
 	authHash authHash
 }
 
 type repository interface {
-	FindCountById(uuid.UUID) int
+	FindCountById(id uuid.UUID) int
 }
 
 func New (name string, email string, password string) user {
 	return user{
+		id: id(uuid.NewUUID()),
 		name: name,
 		email: email,
 		authHash: generateAuthHash(name, password),
@@ -32,7 +35,7 @@ func SetRepo(r repository) {
 }
 
 func (aUser user) Id() uuid.UUID {
-	return aUser.id
+	return uuid.UUID(aUser.id)
 }
 
 func generateAuthHash (name string, password string) authHash {
@@ -40,6 +43,6 @@ func generateAuthHash (name string, password string) authHash {
 	return aAuthHash
 }
 
-func ExistsUserWithId (aId uuid.UUID) bool {
-	return aRepo.FindCountById(aId) > 0
+func ExistsUserWithId (anId uuid.UUID) bool {
+	return aRepo.FindCountById(anId) > 0
 }

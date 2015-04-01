@@ -1,27 +1,27 @@
 package gorm
 
 import (
-	gm "github.com/AitorGuerrero/BadassCity/persistence/gorm"
-	"github.com/AitorGuerrero/BadassCity/user"
+	"github.com/AitorGuerrero/User"
 
 	"code.google.com/p/go-uuid/uuid"
+	"github.com/jinzhu/gorm"
 )
 
 type repo struct {
-
+	gm *gorm.DB
 }
 
-func Get() repo {
+func Get(gm *gorm.DB) repo {
 	aRepo := repo {
-
+		gm: gm,
 	}
 
 	return aRepo
 }
 
-func (*repo) FindCountById(id uuid.UUID) int {
+func (aRepo *repo) FindCountById(id uuid.UUID) int {
 	var count int
-	users := []user.SerializedUser{}
-	gm.Manager().db.Where("id = ?", string(id)).Find(&users).Count(&count)
+	users := []User.SerializedUser{}
+	aRepo.gm.Where("id = ?", string(id)).Find(&users).Count(&count)
 	return count
 }
