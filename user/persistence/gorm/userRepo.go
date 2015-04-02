@@ -1,7 +1,7 @@
 package gorm
 
 import (
-	"github.com/AitorGuerrero/User"
+	"github.com/AitorGuerrero/User/user"
 
 	"code.google.com/p/go-uuid/uuid"
 	"github.com/jinzhu/gorm"
@@ -21,7 +21,7 @@ func Get(gm *gorm.DB) userRepo {
 
 func (aRepo userRepo) FindCountById(id uuid.UUID) int {
 	var count int
-	users := []User.SerializedUser{}
+	users := []user.SerializedUser{}
 	aRepo.gm.Where("id = ?", string(id)).Find(&users).Count(&count)
 	return count
 }

@@ -1,4 +1,4 @@
-package User
+package user
 
 import (
 	"code.google.com/p/go-uuid/uuid"

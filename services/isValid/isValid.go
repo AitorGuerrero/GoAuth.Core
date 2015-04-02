@@ -2,7 +2,7 @@ package isValid
 
 import (
 	"github.com/AitorGuerrero/User/queries/existsUserWithId"
-	"github.com/AitorGuerrero/User/persistence/userRepo"
+	userRepo "github.com/AitorGuerrero/User/user/persistence"
 
 	"code.google.com/p/go-uuid/uuid"
 )

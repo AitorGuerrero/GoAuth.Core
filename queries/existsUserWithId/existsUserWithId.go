@@ -1,7 +1,7 @@
 package existsUserWithId
 
 import (
-	"github.com/AitorGuerrero/User/persistence/userRepo"
+	userRepo "github.com/AitorGuerrero/User/user/persistence"
 
 	"code.google.com/p/go-uuid/uuid"
 )

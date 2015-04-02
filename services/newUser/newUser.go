@@ -1,8 +1,8 @@
 package newUser
 
 import (
-	"github.com/AitorGuerrero/User"
-	"github.com/AitorGuerrero/User/persistence/userRepo"
+	User "github.com/AitorGuerrero/User/user"
+	userRepo "github.com/AitorGuerrero/User/user/persistence"
 )
 
 func Service(name, email, password string, ur userRepo.UserRepo) (interface{}, error) {

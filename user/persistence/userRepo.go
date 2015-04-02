@@ -1,4 +1,4 @@
-package userRepo
+package persistence
 
 import(
 	"code.google.com/p/go-uuid/uuid"

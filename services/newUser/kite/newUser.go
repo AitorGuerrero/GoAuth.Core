@@ -2,7 +2,7 @@ package kite
 
 import (
 	"github.com/AitorGuerrero/User/services/newUser"
-	"github.com/AitorGuerrero/User/persistence/userRepo"
+	userRepo "github.com/AitorGuerrero/User/user/persistence"
 
 	"github.com/koding/kite"
 )

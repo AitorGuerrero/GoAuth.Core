@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/AitorGuerrero/User/persistence/userRepo"
-	userRepoGorm "github.com/AitorGuerrero/User/persistence/userRepo/gorm"
+	userRepo "github.com/AitorGuerrero/User/user/persistence"
+	userRepoGorm "github.com/AitorGuerrero/User/user/persistence/gorm"
 	newUserService "github.com/AitorGuerrero/User/services/newUser/kite"
 	isValidService "github.com/AitorGuerrero/User/services/isValid/kite"
 	"github.com/AitorGuerrero/User/config"

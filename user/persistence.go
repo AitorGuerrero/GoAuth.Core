@@ -1,4 +1,4 @@
-package User
+package user
 
 type SerializedUser struct {
 	Id string
