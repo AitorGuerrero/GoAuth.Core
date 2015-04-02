@@ -1,5 +1,9 @@
 package config
 
+import(
+	"github.com/AitorGuerrero/User/persistence/mongoDB"
+)
+
 type SqlDbConfig struct {
 	Name string
 	UserName string
@@ -15,5 +19,6 @@ type KiteServiceConfig struct {
 
 type Config struct {
 	SqlDbConfig
+	mongoDB.MongoDBConfig
 	KiteServiceConfig
 }

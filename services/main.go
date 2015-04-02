@@ -1,40 +1,24 @@
 package main
 
 import (
+	"github.com/AitorGuerrero/User/persistence/mongoDB"
 	userRepo "github.com/AitorGuerrero/User/user/persistence"
-	userRepoGorm "github.com/AitorGuerrero/User/user/persistence/gorm"
+	userRepoMgo "github.com/AitorGuerrero/User/user/persistence/mgo"
 	newUserService "github.com/AitorGuerrero/User/services/newUser/kite"
 	isValidService "github.com/AitorGuerrero/User/services/isValid/kite"
 	"github.com/AitorGuerrero/User/config"
 
 	"github.com/koding/kite"
-	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
-	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/mattn/go-sqlite3"
 )
 
-var db *gorm.DB
+var c *mongoDB.Connection
 var ur userRepo.UserRepo
 
 func main() {
-	c := config.Get()
-	db, _ = initPersistence(c.SqlDbConfig)
-	setRepos()
-	initServices(c.KiteServiceConfig)
-}
-
-func initPersistence(c config.SqlDbConfig) (*gorm.DB, error) {
-	db, _ := gorm.Open("mysql", c.UserName + ":" + c.Password + "@/" + c.Name + "?charset=utf8&parseTime=True&loc=Local")
-	db.DB()
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
-	return &db, nil
-}
-
-func setRepos() {
-	userRepo.Init(userRepoGorm.Get(db))
-	ur = userRepo.Get()
+	cfg := config.Get()
+	c, _ = mongoDB.Connect(cfg.MongoDBConfig)
+	ur = userRepoMgo.Get(c)
+	initServices(cfg.KiteServiceConfig)
 }
 
 func initServices(c config.KiteServiceConfig) {
