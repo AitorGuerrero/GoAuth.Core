@@ -7,8 +7,12 @@ type SerializedUser struct {
 	AuthHash string
 }
 
-func (aUser *user) Serialize () interface{} {
-	return &SerializedUser {
+func (SerializedUser) TableName() string {
+	return "users"
+}
+
+func (aUser *user) Serialize () SerializedUser {
+	return SerializedUser {
 		Id: string(aUser.id),
 		Name: aUser.name,
 		Email: aUser.email,
@@ -16,8 +20,8 @@ func (aUser *user) Serialize () interface{} {
 	}
 }
 
-func (aUser *SerializedUser) Unserialize () *user {
-	return &user {
+func (aUser *SerializedUser) Unserialize () user {
+	return user {
 		id: id(aUser.Id),
 		name: aUser.Name,
 		email: aUser.Email,

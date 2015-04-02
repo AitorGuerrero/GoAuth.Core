@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/AitorGuerrero/User"
-	userRepo "github.com/AitorGuerrero/User/persistence/user/gorm"
+	"github.com/AitorGuerrero/User/persistence/userRepo"
+	userRepoGorm "github.com/AitorGuerrero/User/persistence/userRepo/gorm"
 	newUserService "github.com/AitorGuerrero/User/services/newUser/kite"
 	isValidService "github.com/AitorGuerrero/User/services/isValid/kite"
 	"github.com/AitorGuerrero/User/config"
@@ -15,16 +15,17 @@ import (
 )
 
 var db *gorm.DB
+var ur userRepo.UserRepo
 
 func main() {
-	aConfig := config.Get()
-	db, _ = initPersistence(aConfig.SqlDbConfig)
-	initServices(aConfig.KiteServiceConfig)
+	c := config.Get()
+	db, _ = initPersistence(c.SqlDbConfig)
 	setRepos()
+	initServices(c.KiteServiceConfig)
 }
 
-func initPersistence(dbConfig config.SqlDbConfig) (*gorm.DB, error) {
-	db, _ := gorm.Open("mysql", dbConfig.UserName + ":" + dbConfig.Password + "@/" + dbConfig.Name + "?charset=utf8&parseTime=True&loc=Local")
+func initPersistence(c config.SqlDbConfig) (*gorm.DB, error) {
+	db, _ := gorm.Open("mysql", c.UserName + ":" + c.Password + "@/" + c.Name + "?charset=utf8&parseTime=True&loc=Local")
 	db.DB()
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
@@ -32,15 +33,16 @@ func initPersistence(dbConfig config.SqlDbConfig) (*gorm.DB, error) {
 }
 
 func setRepos() {
-	aRepo := userRepo.Get(db)
-	User.SetRepo(&aRepo)
+	userRepo.Init(userRepoGorm.Get(db))
+	ur = userRepo.Get()
 }
 
-func initServices(kiteConfig config.KiteServiceConfig) {
-	k := kite.New(kiteConfig.Name, kiteConfig.Version)
-	newUserService.AddService(k)
-	isValidService.AddService(k)
+func initServices(c config.KiteServiceConfig) {
+	k := kite.New(c.Name, c.Version)
 
-	k.Config.Port = kiteConfig.Port
+	newUserService.AddService(k, ur)
+	isValidService.AddService(k, ur)
+
+	k.Config.Port = c.Port
 	k.Run()
 }

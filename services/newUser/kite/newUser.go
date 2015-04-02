@@ -2,16 +2,17 @@ package kite
 
 import (
 	"github.com/AitorGuerrero/User/services/newUser"
+	"github.com/AitorGuerrero/User/persistence/userRepo"
 
 	"github.com/koding/kite"
 )
 
-func AddService(k *kite.Kite) {
+func AddService(k *kite.Kite, ur userRepo.UserRepo) {
 	k.HandleFunc("new", func (r *kite.Request) (interface{}, error) {
-			args, _ := r.Args.Map()
-			name := args["name"].MustString()
-			email := args["email"].MustString()
-			password := args["password"].MustString()
-			return newUser.Service(name, email, password)
+			args, _ := r.Args.Slice()
+			name := args[0].MustString()
+			email := args[1].MustString()
+			password := args[2].MustString()
+			return newUser.Service(name, email, password, ur)
 		}).DisableAuthentication()
 }
