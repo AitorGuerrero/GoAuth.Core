@@ -1,4 +1,4 @@
-package gorm
+package MySQL
 
 import (
 	"github.com/AitorGuerrero/User/persistence"
