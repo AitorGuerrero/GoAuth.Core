@@ -2,12 +2,12 @@ package persistence
 
 import(
 	"github.com/AitorGuerrero/User/user"
-
-	"code.google.com/p/go-uuid/uuid"
 )
 
+type Serializable interface {
+	Serialize () *user.SerializedUser
+}
 type UserRepo interface {
-	Persist (u interface{})
-	FindCountById(id uuid.UUID) int
+	Persist (u user.User)
 	Find(id user.Id) user.User
 }

@@ -2,8 +2,7 @@ package inMemory
 
 import(
 	"github.com/AitorGuerrero/User/user"
-
-	"code.google.com/p/go-uuid/uuid"
+	"github.com/AitorGuerrero/User/user/persistence"
 )
 
 type UserRepo struct {
@@ -16,12 +15,8 @@ func New () *UserRepo {
 	}
 }
 
-func (r UserRepo) Persist (u interface{}) {
-	r.c[u.(*user.SerializedUser).Id] = u.(*user.SerializedUser)
-}
-
-func (r UserRepo) FindCountById(id uuid.UUID) int {
-	return 1
+func (r UserRepo) Persist (u user.User) {
+	r.c[string(u.Id())] = u.(persistence.Serializable).Serialize()
 }
 
 func (r UserRepo) Find(id user.Id) user.User {

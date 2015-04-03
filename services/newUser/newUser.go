@@ -7,8 +7,7 @@ import (
 
 func Service(name, email, password string, ur userRepo.UserRepo) (string, error) {
 	u := User.New(name, email, password)
-	su := u.Serialize()
-	ur.Persist(&su)
-	result := su.Id
-	return result, nil
+	ur.Persist(u)
+	result := u.Id()
+	return string(result), nil
 }

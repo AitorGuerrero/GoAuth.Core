@@ -11,8 +11,8 @@ func (SerializedUser) TableName() string {
 	return "users"
 }
 
-func (aUser *user) Serialize () SerializedUser {
-	return SerializedUser {
+func (aUser *user) Serialize () *SerializedUser {
+	return &SerializedUser {
 		Id: string(aUser.id),
 		Name: aUser.name,
 		Email: aUser.email,

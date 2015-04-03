@@ -23,8 +23,8 @@ type repository interface {
 	FindCountById(id uuid.UUID) int
 }
 
-func New (name string, email string, password string) user {
-	return user{
+func New (name string, email string, password string) *user {
+	return &user{
 		id: Id(uuid.NewUUID()),
 		name: name,
 		email: email,
