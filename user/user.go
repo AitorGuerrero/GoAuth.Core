@@ -37,6 +37,6 @@ func (aUser user) Id() Id {
 }
 
 func generateAuthHash (name string, password string) authHash {
-	aAuthHash := authHash(name + password)
+	aAuthHash := authHash(name + "+" + password)
 	return aAuthHash
 }
