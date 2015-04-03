@@ -6,17 +6,17 @@ import (
 
 type authHash string
 
-type id uuid.UUID
+type Id uuid.UUID
 
 type user struct {
-	id id
+	id Id
 	name string
 	email string
 	authHash authHash
 }
 
 type User interface {
-	Id() uuid.UUID
+	Id() Id
 }
 
 type repository interface {
@@ -25,15 +25,15 @@ type repository interface {
 
 func New (name string, email string, password string) user {
 	return user{
-		id: id(uuid.NewUUID()),
+		id: Id(uuid.NewUUID()),
 		name: name,
 		email: email,
 		authHash: generateAuthHash(name, password),
 	}
 }
 
-func (aUser user) Id() uuid.UUID {
-	return uuid.UUID(aUser.id)
+func (aUser user) Id() Id {
+	return aUser.id
 }
 
 func generateAuthHash (name string, password string) authHash {

@@ -3,13 +3,8 @@ package newUser
 import (
 	t "testing"
 	"github.com/AitorGuerrero/User/user/persistence/inMemory"
-
-	"code.google.com/p/go-uuid/uuid"
+	"github.com/AitorGuerrero/User/user"
 )
-
-type user interface {
-	Id() uuid.UUID
-}
 
 func TestShouldCreateNewUser(t *t.T) {
 	n := "aName"
@@ -17,7 +12,7 @@ func TestShouldCreateNewUser(t *t.T) {
 	p := "aPassword"
 	r := inMemory.New()
 	userId, _ := Service(n, e, p, r)
-	resultingUser := r.Find(uuid.UUID(userId))
+	resultingUser := r.Find(user.Id(userId))
 	if userId != string(resultingUser.Id()) {
 		t.Error("User Id dont match" + string(userId))
 	}

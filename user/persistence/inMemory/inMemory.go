@@ -24,6 +24,6 @@ func (r UserRepo) FindCountById(id uuid.UUID) int {
 	return 1
 }
 
-func (r UserRepo) Find(id uuid.UUID) user.User {
+func (r UserRepo) Find(id user.Id) user.User {
 	return r.c[string(id)].Unserialize()
 }

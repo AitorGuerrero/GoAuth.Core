@@ -22,7 +22,7 @@ func (aUser *user) Serialize () SerializedUser {
 
 func (aUser *SerializedUser) Unserialize () user {
 	return user {
-		id: id(aUser.Id),
+		id: Id(aUser.Id),
 		name: aUser.Name,
 		email: aUser.Email,
 		authHash: authHash(aUser.AuthHash),
