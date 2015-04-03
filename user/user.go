@@ -15,6 +15,10 @@ type user struct {
 	authHash authHash
 }
 
+type User interface {
+	Id() uuid.UUID
+}
+
 type repository interface {
 	FindCountById(id uuid.UUID) int
 }

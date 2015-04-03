@@ -17,8 +17,8 @@ func TestShouldCreateNewUser(t *t.T) {
 	p := "aPassword"
 	r := inMemory.New()
 	userId, _ := Service(n, e, p, r)
-	resultingUser := r.Find(uuid.UUID(userId.(string)))
-	if userId != resultingUser.Id {
-		t.Error("User Id dont match" + string(userId.(string)))
+	resultingUser := r.Find(uuid.UUID(userId))
+	if userId != string(resultingUser.Id()) {
+		t.Error("User Id dont match" + string(userId))
 	}
 }

@@ -9,5 +9,5 @@ import(
 type UserRepo interface {
 	Persist (u interface{})
 	FindCountById(id uuid.UUID) int
-	Find(id uuid.UUID) *user.SerializedUser
+	Find(id uuid.UUID) user.User
 }
