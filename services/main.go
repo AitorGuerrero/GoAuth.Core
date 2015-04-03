@@ -6,6 +6,7 @@ import (
 	userRepoMgo "github.com/AitorGuerrero/User/user/persistence/mgo"
 	newUserService "github.com/AitorGuerrero/User/services/newUser/kite"
 	isValidService "github.com/AitorGuerrero/User/services/isValid/kite"
+	findByIdService "github.com/AitorGuerrero/User/services/findById/kite"
 	"github.com/AitorGuerrero/User/config"
 
 	"github.com/koding/kite"
@@ -26,6 +27,7 @@ func initServices(c config.KiteServiceConfig) {
 
 	newUserService.AddService(k, ur)
 	isValidService.AddService(k, ur)
+	findByIdService.AddService(k, ur)
 
 	k.Config.Port = c.Port
 	k.Run()

@@ -2,6 +2,7 @@ package mgo
 
 import(
 	"github.com/AitorGuerrero/User/persistence/mongoDB"
+	"github.com/AitorGuerrero/User/user"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -28,4 +29,10 @@ func (r userRepo) FindCountById(id uuid.UUID) int {
 
 func (r userRepo) Persist (u interface{}) {
 	r.c.Insert(u)
+}
+
+func (r userRepo) Find(id uuid.UUID) user.SerializedUser {
+	aUser := user.SerializedUser{}
+	r.c.Find(bson.M{"id": string(id)}).One(aUser)
+	return aUser
 }
