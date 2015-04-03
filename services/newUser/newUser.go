@@ -9,6 +9,6 @@ func Service(name, email, password string, ur userRepo.UserRepo) (interface{}, e
 	u := User.New(name, email, password)
 	su := u.Serialize()
 	ur.Persist(&su)
-	result := u.Id()
+	result := su.Id
 	return result, nil
 }
