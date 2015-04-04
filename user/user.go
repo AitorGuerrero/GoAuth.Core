@@ -21,10 +21,6 @@ type User interface {
 	Email() string
 }
 
-type repository interface {
-	FindCountById(id uuid.UUID) int
-}
-
 func New (name string, email string, password string) *user {
 	return &user{
 		id: Id(uuid.NewUUID()),

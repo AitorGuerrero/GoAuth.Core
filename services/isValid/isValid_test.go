@@ -6,7 +6,7 @@ import (
 	"github.com/AitorGuerrero/User/user"
 )
 
-func TestWhenTheUserDoesNotExistsShouldShouldReturnFalse(t *t.T) {
+func TestWhenTheUserDoesNotExistsShouldReturnFalse(t *t.T) {
 	r := inMemory.New()
 	id := "sadasdasdasd"
 	exists, _ := Service(id, r)
