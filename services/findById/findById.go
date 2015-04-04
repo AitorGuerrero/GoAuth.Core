@@ -2,7 +2,9 @@ package findById
 
 import (
 	userRepo "github.com/AitorGuerrero/User/user/persistence"
-	"code.google.com/p/go-uuid/uuid"
+	"github.com/AitorGuerrero/User/user"
+
+	"errors"
 )
 
 type Response struct {
@@ -11,7 +13,10 @@ type Response struct {
 	Email string
 }
 
-func Service(id string, ur userRepo.UserRepo) (interface{}, error) {
-	u := ur.Find(uuid.UUID(id))
-	return Response{u.Id, u.Name, u.Email}, nil
+func Service(id string, ur userRepo.UserRepo) (Response, error) {
+	u, error := ur.Find(user.Id(id))
+	if error != nil {
+		return Response{}, errors.New("A user with that id does not exists")
+	}
+	return Response{string(u.Id()), u.Name(), u.Email()}, nil
 }

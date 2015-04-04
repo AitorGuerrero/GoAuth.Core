@@ -17,6 +17,8 @@ type user struct {
 
 type User interface {
 	Id() Id
+	Name() string
+	Email() string
 }
 
 type repository interface {
@@ -34,6 +36,14 @@ func New (name string, email string, password string) *user {
 
 func (aUser user) Id() Id {
 	return aUser.id
+}
+
+func (aUser user) Name() string {
+	return aUser.name
+}
+
+func (aUser user) Email() string {
+	return aUser.email
 }
 
 func generateAuthHash (name string, password string) authHash {

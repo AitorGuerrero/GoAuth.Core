@@ -9,6 +9,6 @@ type Serializable interface {
 }
 type UserRepo interface {
 	Persist (u user.User)
-	Find(id user.Id) user.User
+	Find(id user.Id) (user.User, error)
 	Exists(id user.Id) bool
 }
