@@ -12,7 +12,7 @@ func TestShouldCreateNewUser(t *t.T) {
 	p := "aPassword"
 	r := inMemory.New()
 	userId, _ := Service(n, e, p, r)
-	resultingUser := r.Find(user.Id(userId))
+	resultingUser, _ := r.Find(user.Id(userId))
 	if userId != string(resultingUser.Id()) {
 		t.Error("User Id dont match" + string(userId))
 	}
@@ -24,7 +24,7 @@ func TestShouldSaveDePasswordHashCorrectly (t *t.T) {
 	p := "aPassword"
 	r := inMemory.New()
 	userId, _ := Service(n, e, p, r)
-	resultingUser := r.Find(user.Id(userId))
+	resultingUser, _ := r.Find(user.Id(userId))
 	if userId != string(resultingUser.Id()) {
 		t.Error("User Id dont match" + string(userId))
 	}

@@ -1,7 +1,6 @@
 package MySQL
 
 import (
-	"github.com/AitorGuerrero/User/persistence"
 	"github.com/AitorGuerrero/User/config"
 
 	"github.com/jinzhu/gorm"
@@ -14,7 +13,7 @@ type Connection struct {
 	db gorm.DB
 }
 
-func Connect(c config.SqlDbConfig) (persistence.Connection, error) {
+func Connect(c config.SqlDbConfig) (*Connection, error) {
 	db, _ := gorm.Open("mysql", c.UserName + ":" + c.Password + "@/" + c.Name + "?charset=utf8&parseTime=True&loc=Local")
 	db.DB()
 	db.DB().SetMaxIdleConns(10)

@@ -3,10 +3,10 @@ package mgo
 import(
 	"github.com/AitorGuerrero/User/persistence/mongoDB"
 	"github.com/AitorGuerrero/User/user"
+	"github.com/AitorGuerrero/User/user/persistence"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"code.google.com/p/go-uuid/uuid"
 )
 
 type userRepo struct {
@@ -21,18 +21,18 @@ func Get(mc *mongoDB.Connection) userRepo {
 	return aRepo
 }
 
-func (r userRepo) FindCountById(id uuid.UUID) int {
+func (r userRepo) Exists(id user.Id) bool {
 	var count int
 	count, _ = r.c.Find(bson.M{"id": string(id)}).Count()
-	return count
+	return count > 0
 }
 
-func (r userRepo) Persist (u interface{}) {
-	r.c.Insert(u)
+func (r userRepo) Persist (u user.User) {
+	r.c.Insert(u.(persistence.Serializable).Serialize())
 }
 
-func (r userRepo) Find(id uuid.UUID) user.SerializedUser {
-	aUser := user.SerializedUser{}
+func (r userRepo) Find(id user.Id) (user.User, error) {
+	aUser := &user.SerializedUser{}
 	r.c.Find(bson.M{"id": string(id)}).One(aUser)
-	return aUser
+	return aUser.Unserialize(), nil
 }
