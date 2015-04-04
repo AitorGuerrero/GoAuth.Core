@@ -1,14 +1,11 @@
 package isValid
 
 import (
-	"github.com/AitorGuerrero/User/queries/existsUserWithId"
+	"github.com/AitorGuerrero/User/user"
 	userRepo "github.com/AitorGuerrero/User/user/persistence"
-
-	"code.google.com/p/go-uuid/uuid"
 )
 
-func Service(id string, ur userRepo.UserRepo) (bool, error) {
-	q := existsUserWithId.New(ur)
-	result := q.Execute(uuid.UUID(id))
-	return result, nil
+func Service(id user.Id, ur userRepo.UserRepo) (bool, error) {
+	e := ur.Exists(user.Id(id))
+	return e, nil
 }

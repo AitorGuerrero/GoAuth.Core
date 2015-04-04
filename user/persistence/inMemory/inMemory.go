@@ -22,3 +22,12 @@ func (r UserRepo) Persist (u user.User) {
 func (r UserRepo) Find(id user.Id) user.User {
 	return r.c[string(id)].Unserialize()
 }
+
+func (r UserRepo) Exists(id user.Id) bool {
+	e := false;
+	if r.c[string(id)] != nil {
+		e = true
+	}
+
+	return e
+}
