@@ -2,15 +2,18 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
+	"github.com/AitorGuerrero/UserGo/session"
 )
 
 type Command struct {
-	validator user.SignInValidator
+	UserSource user.UserSource
+	Validator user.SignInValidator
+	TokensSource *session.TokenSource
 }
 
 type Request struct {
 	Id string
-	passkey string
+	Passkey string
 }
 
 type Response struct {
@@ -19,11 +22,14 @@ type Response struct {
 
 func (c Command) Execute(r Request) (Response, error) {
 	res := Response{}
-	error := c.validator.Validate(user.Id(r.Id), user.Passkey(r.passkey))
+	error := c.Validator.Validate(user.Id(r.Id), user.Passkey(r.Passkey))
 	if nil != error {
 		return res, error
 	}
-	res.SessionToken = "newToken"
+	u, _ := c.UserSource.ById(user.Id(r.Id))
+	token := session.GenerateNewToken(u)
+	c.TokensSource.Add(token)
+	res.SessionToken = token.Code()
 
 	return res, nil;
 }

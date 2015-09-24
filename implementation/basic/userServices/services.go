@@ -7,15 +7,17 @@ import (
 )
 var enc = basic.Encryptor{}
 var pe = user.PasskeyEncryptor{enc}
+var fac = user.Factory{pe}
+var src = userSource.UserSource{}
 
 func Factory() user.Factory {
-	return user.Factory{pe}
+	return fac
 }
 
 func PassKeyEncryptor() user.PasskeyEncryptor {
-	return user.PasskeyEncryptor{enc}
+	return pe
 }
 
 func Source() user.UserSource {
-	return &userSource.UserSource{};
+	return &src;
 }

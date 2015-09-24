@@ -2,31 +2,41 @@ package checkToken
 
 import (
 	t "testing"
-//	"github.com/AitorGuerrero/commands/newUser"
-//	"github.com/AitorGuerrero/UserGo/implementation/basic/userServices"
+	"github.com/AitorGuerrero/UserGo/session"
+	"github.com/AitorGuerrero/UserGo/commands/newUser"
+	"github.com/AitorGuerrero/UserGo/commands/login"
+	"github.com/AitorGuerrero/UserGo/implementation/basic/services"
 )
 
-var com = Command{}
+var tokenSource = session.TokenSource{}
+var com = Command{tokenSource, services.UserSource()}
 var req = Request{}
-//var userFactory = userServices.Factory()
-//var userSource = userServices.Source()
 
 func TestIfTheTokenDoesNotExistsShouldReturnAnError (t *t.T) {
 	req.Token = "PisToken"
 	err := com.Execute(req)
 	if nil == err {
-		t.Error("Should return an error")
+		t.Error("S ror")
 	}
 }
 
-//func TestIfUserDoNotOwnTheTokenShouldReturnAnError (t *t.T) {
-//	newUserCommand = newUser.Command{}
-//	newUserCommand.Execute(newUser.Request{})
-//	newUserCommand.Execute(newUser.Request{})
-//
-//	err := com.Execute(req)
-//
-//	if (nil == err) {
-//		t.Error("Should throw an error")
-//	}
-//}
+func TestIfUserDoNotOwnTheTokenShouldReturnAnError (t *t.T) {
+	userAId := "userA";
+	userAPasskey := "passA"
+	userBId := "userB"
+	commandNewUser := newUser.Command{services.UserSource(), services.UserPassKeyEncryptor()}
+	commandNewUser.Execute(newUser.Request{userAId, userAPasskey})
+	commandNewUser.Execute(newUser.Request{userBId, "passB"})
+
+	loginCommand := login.Command{services.UserSource(), services.SignInValidator(), &tokenSource}
+	res, _ := loginCommand.Execute(login.Request{userAId, userAPasskey})
+	userAToken := res.SessionToken
+
+	err := com.Execute(Request{userBId, userAToken})
+
+	if (nil == err) {
+		t.Error("Should throw an error")
+	} else if ("Incorrect Token" != err.Error()) {
+		t.Error("Should throw 'Incorrect Token' error")
+	}
+}

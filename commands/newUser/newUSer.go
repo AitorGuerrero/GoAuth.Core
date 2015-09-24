@@ -7,13 +7,13 @@ import (
 )
 
 type Command struct {
-	source user.UserSource
-	encryptor user.PasskeyEncryptor
+	Source user.UserSource
+	Encryptor user.PasskeyEncryptor
 }
 
 type Request struct {
 	Id string
-	passkey string
+	Passkey string
 }
 
 func (c Command) Execute(r Request) (error) {
@@ -21,8 +21,8 @@ func (c Command) Execute(r Request) (error) {
 		return errors.New("user should have an identifier")
 	}
 	var userId = user.Id(r.Id);
-	u := user.New(userId, c.encryptor.Encrypt(userId, user.Passkey(r.passkey)))
-	c.source.Add(u)
+	u := user.New(userId, c.Encryptor.Encrypt(userId, user.Passkey(r.Passkey)))
+	c.Source.Add(u)
 
 	return nil;
 }

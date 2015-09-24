@@ -3,15 +3,16 @@ package login
 import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/implementation/basic/userServices"
+	"github.com/AitorGuerrero/UserGo/session"
+	"github.com/AitorGuerrero/UserGo/implementation/basic/services"
 )
 
-var source = userServices.Source()
+var source = services.UserSource()
 var id = "userIdentifier"
 var passkey = "passkey"
-var fac = userServices.Factory()
-
-var c = Command{user.SignInValidator{userServices.PassKeyEncryptor(), source}}
+var fac = services.UserFactory()
+var tokenSource = session.TokenSource{};
+var c = Command{source, services.SignInValidator(), &tokenSource}
 var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
 func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
@@ -41,5 +42,11 @@ func TestShouldReturnASessionToken(t * t.T) {
 
 	if (res.SessionToken == "") {
 		t.Error("Should return a token")
+	}
+
+	_, err := tokenSource.ByUser(u)
+
+	if (nil != err) {
+		t.Error("Should store the token")
 	}
 }

@@ -17,7 +17,7 @@ var r = Request{}
 var c = Command{usi, pe};
 
 func TestTheUserShouldHaveAnUniqueIdentifier(t *t.T) {
-	r = Request{passkey: passkey}
+	r = Request{Passkey: passkey}
 	err := c.Execute(r);
 	if (err == nil) {
 		t.Error("Should throw an error")
