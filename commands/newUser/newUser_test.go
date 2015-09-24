@@ -7,8 +7,8 @@ import (
 //	"fmt"
 )
 
-var id = user.Id("userIdentifier");
-var passkey = user.Passkey("userPasskey");
+var id = "userIdentifier";
+var passkey = "userPasskey";
 
 var usi = userServices.Source();
 var pe = userServices.PassKeyEncryptor()
@@ -30,11 +30,11 @@ func TestShouldPersistInASource(t *t.T) {
 	if nil != err {
 		t.Error(err)
 	}
-	u, err := usi.ById(id);
+	u, err := usi.ById(user.Id(id));
 	if nil != err {
 		t.Error(err)
 	}
-	if u.Id() != id {
+	if string(u.Id()) != id {
 		t.Error("the user stored is not the same:")
 	}
 }
