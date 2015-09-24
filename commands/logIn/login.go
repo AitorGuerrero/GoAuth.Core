@@ -29,7 +29,7 @@ func (c Command) Execute(r Request) (Response, error) {
 	u, _ := c.UserSource.ById(user.Id(r.Id))
 	token := session.GenerateNewToken(u)
 	c.TokensSource.Add(token)
-	res.SessionToken = token.Code()
+	res.SessionToken = string(token.Code())
 
 	return res, nil;
 }
