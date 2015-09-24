@@ -6,11 +6,11 @@ import (
 )
 var encrypter = basic.Encryptor{}
 var userPassKeyEncryptor = user.PasskeyEncryptor{encrypter}
-var facuserFactory = user.Factory{userPassKeyEncryptor}
+var userFactory = user.Factory{userPassKeyEncryptor}
 var signInValidator = user.SignInValidator{userPassKeyEncryptor, &userSource}
 
 func UserFactory() user.Factory {
-	return facuserFactory
+	return userFactory
 }
 
 func UserPassKeyEncryptor() user.PasskeyEncryptor {
