@@ -2,6 +2,7 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
+	"github.com/AitorGuerrero/UserGo/session"
 	"errors"
 //	"fmt"
 )
@@ -17,13 +18,21 @@ type Request struct {
 	passkey user.Passkey
 }
 
-func (c Command) Execute(r Request) (error) {
+type Response struct {
+	SessionToken session.Token
+}
+
+func (c Command) Execute(r Request) (Response, error) {
+	res := Response{}
 	u, err := c.source.ById(r.Id)
 	if (nil != err) {
-		return err
+		return res, err
 	}
 	if c.encryptor.Encrypt(r.Id, r.passkey) != u.EncryptedPasskey() {
-		return errors.New("The password doen't match")
+		return res, errors.New("The password doen't match")
 	}
-	return nil;
+
+	res.SessionToken = session.Token("newToken")
+
+	return res, nil;
 }

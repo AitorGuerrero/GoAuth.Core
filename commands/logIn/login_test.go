@@ -5,7 +5,6 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/implementation/inMemory/userSource"
 	"github.com/AitorGuerrero/UserGo/implementation/basic"
-//		"fmt"
 )
 
 var source = userSource.New();
@@ -21,7 +20,7 @@ func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
 	invalidUserIdentifier := user.Id("invalidUserIdentifier")
 	r := Request{Id: invalidUserIdentifier}
 
-	err := c.Execute(r)
+	_, err := c.Execute(r)
 
 	if nil == err {
 		t.Error("When the user dont exists Should throw an error")
@@ -31,8 +30,18 @@ func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
 func TestIfThePassKeyDoesNotMatchShouldThrowAnError(t *t.T) {
 	source.Add(u)
 	r := Request{id, user.Passkey("InvalidPasskey")}
-	err := c.Execute(r)
+	_, err := c.Execute(r)
 	if nil == err {
 		t.Error("When the passkey is invalid Should throw an error")
+	}
+}
+
+func TestShouldReturnASessionToken(t * t.T) {
+	source.Add(u)
+	req := Request{id, user.Passkey(passkey)}
+	res, _ := c.Execute(req)
+
+	if (res.SessionToken == "") {
+		t.Error("Should return a token")
 	}
 }

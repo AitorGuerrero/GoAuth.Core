@@ -1,17 +1,5 @@
 package user
 
-//import (
-//	"code.google.com/p/go-uuid/uuid"
-//)
-
-//type authHash string
-//
-
-//type UserSource interface {
-//	ById(Id) User
-////	Add(User)
-//}
-
 type UserSource interface {
 	Add (User) error
 	ById(Id) (User, error)
@@ -57,20 +45,3 @@ type Factory struct {
 func (f Factory) Make (id Id, passkey Passkey) User {
 	return User{id, f.Encryptor.Encrypt(id, passkey)};
 }
-
-//func (aUser user) Id() Id {
-//	return aUser.id
-//}
-//
-//func (aUser user) Name() string {
-//	return aUser.name
-//}
-//
-//func (aUser user) Email() string {
-//	return aUser.email
-//}
-//
-//func generateAuthHash (name string, password string) authHash {
-//	aAuthHash := authHash(name + "+" + password)
-//	return aAuthHash
-//}
