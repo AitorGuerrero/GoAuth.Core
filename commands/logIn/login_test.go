@@ -4,19 +4,22 @@ import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/implementation/inMemory/userSource"
+	"github.com/AitorGuerrero/UserGo/implementation/basic"
 //		"fmt"
 )
 
 var source = userSource.New();
 var id = user.Id("userIdentifier");
 var passkey = user.Passkey("passkey")
-var r = Request{}
-var c = Command{&source}
-var u = user.New(id, passkey)
+var enc = basic.Encryptor{}
+var pe = user.PasskeyEncryptor{enc}
+var c = Command{&source, pe}
+var fac = user.Factory{pe}
+var u = fac.Make(id, passkey)
 
-func TestIfTheUserDownNotExistsShouldThrowAnError(t *t.T) {
+func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
 	invalidUserIdentifier := user.Id("invalidUserIdentifier")
-	r := Request{id: invalidUserIdentifier}
+	r := Request{Id: invalidUserIdentifier}
 
 	err := c.Execute(r)
 

@@ -6,21 +6,23 @@ import (
 //	"fmt"
 )
 
-type Request struct {
-	id user.Id
-	passkey user.Passkey
-}
 
 type Command struct {
 	source user.UserSource
+	encryptor user.PasskeyEncryptor
+}
+
+type Request struct {
+	Id user.Id
+	passkey user.Passkey
 }
 
 func (c Command) Execute(r Request) (error) {
-	u, err := c.source.ById(r.id)
+	u, err := c.source.ById(r.Id)
 	if (nil != err) {
 		return err
 	}
-	if r.passkey != u.Passkey() {
+	if c.encryptor.Encrypt(r.Id, r.passkey) != u.EncryptedPasskey() {
 		return errors.New("The password doen't match")
 	}
 	return nil;
