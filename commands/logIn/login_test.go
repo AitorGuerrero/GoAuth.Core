@@ -3,7 +3,6 @@ package login
 import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/session"
 	"github.com/AitorGuerrero/UserGo/implementation/basic/services"
 )
 
@@ -11,8 +10,8 @@ var source = services.UserSource()
 var id = "userIdentifier"
 var passkey = "passkey"
 var fac = services.UserFactory()
-var tokenSource = session.TokenSource{};
-var c = Command{source, services.SignInValidator(), &tokenSource}
+var tokenSource = services.TokenSource()
+var c = Command{source, services.SignInValidator(), tokenSource}
 var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
 func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {

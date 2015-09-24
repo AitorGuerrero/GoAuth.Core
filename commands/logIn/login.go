@@ -8,7 +8,7 @@ import (
 type Command struct {
 	UserSource user.UserSource
 	Validator user.SignInValidator
-	TokensSource *session.TokenSource
+	TokensSource session.TokenSource
 }
 
 type Request struct {

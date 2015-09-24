@@ -2,13 +2,12 @@ package checkToken
 
 import (
 	t "testing"
-	"github.com/AitorGuerrero/UserGo/session"
 	"github.com/AitorGuerrero/UserGo/commands/newUser"
 	"github.com/AitorGuerrero/UserGo/commands/login"
 	"github.com/AitorGuerrero/UserGo/implementation/basic/services"
 )
 
-var tokenSource = session.TokenSource{}
+var tokenSource = services.TokenSource()
 var com = Command{tokenSource, services.UserSource()}
 var req = Request{}
 
@@ -28,7 +27,7 @@ func TestIfUserDoNotOwnTheTokenShouldReturnAnError (t *t.T) {
 	commandNewUser.Execute(newUser.Request{userAId, userAPasskey})
 	commandNewUser.Execute(newUser.Request{userBId, "passB"})
 
-	loginCommand := login.Command{services.UserSource(), services.SignInValidator(), &tokenSource}
+	loginCommand := login.Command{services.UserSource(), services.SignInValidator(), tokenSource}
 	res, _ := loginCommand.Execute(login.Request{userAId, userAPasskey})
 	userAToken := res.SessionToken
 
