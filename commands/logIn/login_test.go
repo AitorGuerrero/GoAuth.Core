@@ -3,17 +3,17 @@ package login
 import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/implementation/inMemory/userSource"
-	"github.com/AitorGuerrero/UserGo/implementation/basic"
+	"github.com/AitorGuerrero/UserGo/implementation/basic/userServices"
 )
 
-var source = userSource.New();
+var source = userServices.Source()
 var id = user.Id("userIdentifier");
 var passkey = user.Passkey("passkey")
-var enc = basic.Encryptor{}
-var pe = user.PasskeyEncryptor{enc}
-var c = Command{&source, pe}
-var fac = user.Factory{pe}
+
+var pe = userServices.PassKeyEncryptor()
+var fac = userServices.Factory()
+
+var c = Command{source, pe}
 var u = fac.Make(id, passkey)
 
 func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
