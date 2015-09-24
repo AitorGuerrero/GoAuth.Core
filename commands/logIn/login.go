@@ -2,37 +2,28 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/session"
-	"errors"
-//	"fmt"
 )
 
-
 type Command struct {
-	source user.UserSource
-	encryptor user.PasskeyEncryptor
+	validator user.SignInValidator
 }
 
 type Request struct {
-	Id user.Id
-	passkey user.Passkey
+	Id string
+	passkey string
 }
 
 type Response struct {
-	SessionToken session.Token
+	SessionToken string
 }
 
 func (c Command) Execute(r Request) (Response, error) {
 	res := Response{}
-	u, err := c.source.ById(r.Id)
-	if (nil != err) {
-		return res, err
+	error := c.validator.Validate(user.Id(r.Id), user.Passkey(r.passkey))
+	if nil != error {
+		return res, error
 	}
-	if c.encryptor.Encrypt(r.Id, r.passkey) != u.EncryptedPasskey() {
-		return res, errors.New("The password doen't match")
-	}
-
-	res.SessionToken = session.Token("newToken")
+	res.SessionToken = "newToken"
 
 	return res, nil;
 }

@@ -7,17 +7,15 @@ import (
 )
 
 var source = userServices.Source()
-var id = user.Id("userIdentifier");
-var passkey = user.Passkey("passkey")
-
-var pe = userServices.PassKeyEncryptor()
+var id = "userIdentifier"
+var passkey = "passkey"
 var fac = userServices.Factory()
 
-var c = Command{source, pe}
-var u = fac.Make(id, passkey)
+var c = Command{user.SignInValidator{userServices.PassKeyEncryptor(), source}}
+var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
 func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
-	invalidUserIdentifier := user.Id("invalidUserIdentifier")
+	invalidUserIdentifier := "invalidUserIdentifier"
 	r := Request{Id: invalidUserIdentifier}
 
 	_, err := c.Execute(r)
@@ -29,7 +27,7 @@ func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
 
 func TestIfThePassKeyDoesNotMatchShouldThrowAnError(t *t.T) {
 	source.Add(u)
-	r := Request{id, user.Passkey("InvalidPasskey")}
+	r := Request{id, "InvalidPasskey"}
 	_, err := c.Execute(r)
 	if nil == err {
 		t.Error("When the passkey is invalid Should throw an error")
@@ -38,7 +36,7 @@ func TestIfThePassKeyDoesNotMatchShouldThrowAnError(t *t.T) {
 
 func TestShouldReturnASessionToken(t * t.T) {
 	source.Add(u)
-	req := Request{id, user.Passkey(passkey)}
+	req := Request{id, passkey}
 	res, _ := c.Execute(req)
 
 	if (res.SessionToken == "") {
