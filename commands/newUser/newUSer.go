@@ -20,8 +20,10 @@ func (c Command) Execute(r Request) (error) {
 	if "" == r.Id {
 		return errors.New("user should have an identifier")
 	}
-	var userId = user.Id(r.Id);
-	u := user.New(userId, c.Encryptor.Encrypt(userId, user.Passkey(r.Passkey)))
+	uid := user.Id(r.Id);
+	p := user.Passkey(r.Passkey)
+	ep := c.Encryptor.Encrypt(uid, p)
+	u := user.New(uid, ep)
 	c.Source.Add(u)
 
 	return nil;
