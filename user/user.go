@@ -1,48 +1,49 @@
 package user
 
-import (
-	"code.google.com/p/go-uuid/uuid"
-)
+//import (
+//	"code.google.com/p/go-uuid/uuid"
+//)
 
-type authHash string
+//type authHash string
+//
 
-type Id uuid.UUID
+//type UserSource interface {
+//	ById(Id) User
+////	Add(User)
+//}
 
-type user struct {
+type UserSource interface {
+	Add (User) error
+	ById(Id) (User, error)
+}
+
+type Id string
+
+type User struct {
 	id Id
-	name string
-	email string
-	authHash authHash
 }
 
-type User interface {
-	Id() Id
-	Name() string
-	Email() string
+func (u User) Id() Id {
+	return u.id
 }
 
-func New (name string, email string, password string) *user {
-	return &user{
-		id: Id(uuid.NewUUID()),
-		name: name,
-		email: email,
-		authHash: generateAuthHash(name, password),
-	}
+func New (id Id) User {
+	return User{id}
 }
 
-func (aUser user) Id() Id {
-	return aUser.id
-}
-
-func (aUser user) Name() string {
-	return aUser.name
-}
-
-func (aUser user) Email() string {
-	return aUser.email
-}
-
-func generateAuthHash (name string, password string) authHash {
-	aAuthHash := authHash(name + "+" + password)
-	return aAuthHash
-}
+//func (aUser user) Id() Id {
+//	return aUser.id
+//}
+//
+//func (aUser user) Name() string {
+//	return aUser.name
+//}
+//
+//func (aUser user) Email() string {
+//	return aUser.email
+//}
+//
+//func generateAuthHash (name string, password string) authHash {
+//	aAuthHash := authHash(name + "+" + password)
+//	return aAuthHash
+//}

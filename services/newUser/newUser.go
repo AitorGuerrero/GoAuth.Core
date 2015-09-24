@@ -10,3 +10,17 @@ func Service(name, email, password string, ur userRepo.UserRepo) (string, error)
 	ur.Persist(u)
 	return string(u.Id()), nil
 }
+
+func New() {
+
+}
+
+type service struct {
+
+}
+
+func (service) Execute() {
+
+}
+
+
