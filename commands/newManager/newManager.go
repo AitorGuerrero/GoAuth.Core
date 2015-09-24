@@ -6,7 +6,7 @@ import (
 
 type Command struct {
 	Source user.ManagerSource
-	Encryptor user.PasskeyEncryptor
+	Factory user.Factory
 }
 
 type Request struct {
@@ -18,9 +18,8 @@ type Request struct {
 func (com Command) Execute(req Request) (error) {
 	uid := user.Id(req.Id)
 	p := user.Passkey(req.Passkey)
-	ep := com.Encryptor.Encrypt(uid, p)
+	u := com.Factory.Make(uid, p)
 	ns := user.Namespace(req.Namespace)
-	u := user.New(uid, ep)
 	m := user.Manager{u, ns}
 	com.Source.Add(m)
 

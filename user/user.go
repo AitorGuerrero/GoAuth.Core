@@ -22,10 +22,6 @@ func (u User) EncryptedPasskey() cryptedPasskey {
 	return u.passkey
 }
 
-func New (id Id, passkey cryptedPasskey) User {
-	return User{id, passkey}
-}
-
 type Encryptor interface {
 	Encrypt(string) string
 }
@@ -45,3 +41,4 @@ type Factory struct {
 func (f Factory) Make (id Id, passkey Passkey) User {
 	return User{id, f.Encryptor.Encrypt(id, passkey)};
 }
+

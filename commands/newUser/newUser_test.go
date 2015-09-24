@@ -11,7 +11,7 @@ var passkey = "userPasskey";
 
 var userSource = services.UserSource();
 
-var com = Command{userSource, services.UserPassKeyEncryptor()};
+var com = Command{userSource, services.UserFactory()};
 
 func TestShouldPersistInASource(t *t.T) {
 	err := com.Execute(Request{id, passkey});

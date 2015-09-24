@@ -12,7 +12,7 @@ var namespace = "userPasskey";
 
 var managerSource = services.ManagerSource();
 
-var com = Command{managerSource, services.UserPassKeyEncryptor()};
+var com = Command{managerSource, services.UserFactory()};
 
 func TestShouldPersistInASource(t *t.T) {
 	err := com.Execute(Request{id, passkey, namespace});

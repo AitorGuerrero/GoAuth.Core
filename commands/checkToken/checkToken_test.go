@@ -23,7 +23,7 @@ func TestIfUserDoNotOwnTheTokenShouldReturnAnError (t *t.T) {
 	userAId := "userA";
 	userAPasskey := "passA"
 	userBId := "userB"
-	commandNewUser := newUser.Command{services.UserSource(), services.UserPassKeyEncryptor()}
+	commandNewUser := newUser.Command{services.UserSource(), services.UserFactory()}
 	commandNewUser.Execute(newUser.Request{userAId, userAPasskey})
 	commandNewUser.Execute(newUser.Request{userBId, "passB"})
 
