@@ -8,12 +8,13 @@ import (
 )
 
 var id = user.Id("userIdentifier");
+var passkey = user.Passkey("userPasskey");
 var usi = userSource.New();
 var r = Request{}
 var c = Command{&usi};
 
 func TestTheUserShouldHaveAnUniqueIdentifier(t *t.T) {
-	r = Request{}
+	r = Request{passkey: passkey}
 	err := c.Execute(r);
 	if (err == nil) {
 		t.Error("Should throw an error")
@@ -21,7 +22,7 @@ func TestTheUserShouldHaveAnUniqueIdentifier(t *t.T) {
 }
 
 func TestShouldPersistInASource(t *t.T) {
-	var r = Request{id}
+	var r = Request{id, passkey}
 	err := c.Execute(r);
 	if nil != err {
 		t.Error(err)

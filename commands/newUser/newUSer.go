@@ -12,6 +12,7 @@ type Command struct {
 
 type Request struct {
 	Id user.Id
+	passkey user.Passkey
 }
 
 func (c Command) Execute(r Request) (error) {
@@ -19,7 +20,7 @@ func (c Command) Execute(r Request) (error) {
 		return errors.New("user should have an identifier")
 	}
 
-	u := user.New(r.Id)
+	u := user.New(r.Id, r.passkey)
 	c.source.Add(u)
 
 	return nil;
