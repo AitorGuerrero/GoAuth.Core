@@ -5,11 +5,12 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 )
 
-var identifier = user.Identifier("Pis");
+var identifier = user.Id("Pis");
+var passkey = user.Passkey("passkey")
 var s = New();
-var u = user.New(identifier);
 
 func TestAddingAUserShouldStoreInCollection(t *t.T) {
+	u := user.New(identifier, passkey);
 	s.Add(u);
 	if 1 != len(s.collection) {
 		t.Error("Should add the user to the collection")
@@ -19,7 +20,8 @@ func TestAddingAUserShouldStoreInCollection(t *t.T) {
 	}
 }
 
-func TestShouldBeAbleToRetrieveAStoredUerByItsIdentifier(t *t.T) {
+func TestShouldBeAbleToRetrieveAStoredUserByItsIdentifier(t *t.T) {
+	u := user.New(identifier, passkey)
 	s.Add(u);
 	ru, error := s.ById(identifier);
 	if error != nil {

@@ -18,18 +18,25 @@ type UserSource interface {
 }
 
 type Id string
+type Passkey string
 
 type User struct {
 	id Id
+	passkey Passkey
 }
 
 func (u User) Id() Id {
 	return u.id
 }
 
-func New (id Id) User {
-	return User{id}
+func (u User) Passkey() Passkey {
+	return u.passkey
 }
+
+func New (id Id, passkey Passkey) User {
+	return User{id, passkey}
+}
+
 
 //func (aUser user) Id() Id {
 //	return aUser.id
