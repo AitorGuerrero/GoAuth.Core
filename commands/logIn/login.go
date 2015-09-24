@@ -6,9 +6,7 @@ import (
 )
 
 type Command struct {
-	UserSource user.UserSource
-	Validator user.SignInValidator
-	TokensSource session.TokenSource
+	Login session.Login
 }
 
 type Request struct {
@@ -20,16 +18,12 @@ type Response struct {
 	SessionToken string
 }
 
-func (c Command) Execute(r Request) (Response, error) {
+func (c Command) Execute(req Request) (Response, error) {
 	res := Response{}
-	error := c.Validator.Validate(user.Id(r.Id), user.Passkey(r.Passkey))
-	if nil != error {
-		return res, error
-	}
-	u, _ := c.UserSource.ById(user.Id(r.Id))
-	token := session.GenerateNewToken(u)
-	c.TokensSource.Add(token)
-	res.SessionToken = string(token.Code())
+	id := user.Id(req.Id)
+	p := user.Passkey(req.Passkey)
+	t, err := c.Login.Try(id, p)
+	res.SessionToken = string(t.Code())
 
-	return res, nil;
+	return res, err
 }

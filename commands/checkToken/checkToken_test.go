@@ -27,7 +27,7 @@ func TestIfUserDoNotOwnTheTokenShouldReturnAnError (t *t.T) {
 	commandNewUser.Execute(newUser.Request{userAId, userAPasskey})
 	commandNewUser.Execute(newUser.Request{userBId, "passB"})
 
-	loginCommand := login.Command{services.UserSource(), services.SignInValidator(), tokenSource}
+	loginCommand := login.Command{services.UserLogin()}
 	res, _ := loginCommand.Execute(login.Request{userAId, userAPasskey})
 	userAToken := res.SessionToken
 

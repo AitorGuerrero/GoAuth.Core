@@ -11,7 +11,7 @@ var id = "userIdentifier"
 var passkey = "passkey"
 var fac = services.UserFactory()
 var tokenSource = services.TokenSource()
-var c = Command{source, services.SignInValidator(), tokenSource}
+var c = Command{services.UserLogin()}
 var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
 func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {
@@ -38,14 +38,22 @@ func TestShouldReturnASessionToken(t * t.T) {
 	source.Add(u)
 	req := Request{id, passkey}
 	res, _ := c.Execute(req)
-
 	if (res.SessionToken == "") {
 		t.Error("Should return a token")
 	}
-
 	_, err := tokenSource.ByUser(u)
-
 	if (nil != err) {
 		t.Error("Should store the token")
+	}
+}
+
+func TestWhenLoggedTwiceShouldReturnTheSameToken(t * t.T) {
+	source.Add(u)
+	req := Request{id, passkey}
+	res, _ := c.Execute(req)
+	t1 := res.SessionToken
+	res, _ = c.Execute(req)
+	if (t1 != res.SessionToken) {
+		t.Error("Should return the same Token")
 	}
 }
