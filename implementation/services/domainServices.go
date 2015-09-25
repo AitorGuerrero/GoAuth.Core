@@ -9,6 +9,7 @@ var userPassKeyEncryptor = user.PasskeyEncryptor{encrypter}
 var userFactory = user.Factory{userPassKeyEncryptor}
 var signInValidator = user.SignInValidator{userPassKeyEncryptor}
 var login = user.Login{&userSource, signInValidator, &tokenSource}
+var tokenChecker = user.TokenChecker{&tokenSource}
 
 func UserFactory() user.Factory {
 	return userFactory
@@ -24,4 +25,8 @@ func SignInValidator() user.SignInValidator {
 
 func UserLogin() user.Login {
 	return login
+}
+
+func TokenChecker() user.TokenChecker {
+	return tokenChecker
 }

@@ -8,7 +8,7 @@ import (
 )
 
 var tokenSource = services.TokenSource()
-var com = Command{tokenSource, services.UserSource()}
+var com = Command{services.TokenChecker(), services.UserSource()}
 var req = Request{}
 
 func TestIfTheTokenDoesNotExistsShouldReturnAnError (t *t.T) {

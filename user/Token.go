@@ -15,14 +15,6 @@ type TokenSource interface {
 type Code uuid.UUID
 
 type Token struct {
-	code Code
-	user User
-}
-
-func (t Token) Code() Code {
-	return t.code
-}
-
-func (t Token) User() User {
-	return t.user
+	Code Code
+	User User
 }

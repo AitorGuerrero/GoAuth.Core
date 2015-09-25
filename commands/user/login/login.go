@@ -22,7 +22,7 @@ func (c Command) Execute(req Request) (Response, error) {
 	id := user.Id(req.Id)
 	p := user.Passkey(req.Passkey)
 	t, err := c.Login.Try(id, p)
-	res.SessionToken = string(t.Code())
+	res.SessionToken = string(t.Code)
 
 	return res, err
 }

@@ -2,21 +2,20 @@ package checkToken
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	"errors"
 )
 type Command struct {
-	TokenSource user.TokenSource
+	TokenChecker user.TokenChecker
 	UserSource user.UserSource
 }
 
 func (c Command) Execute(req Request) (error) {
-	user, _ := c.UserSource.ById(user.Id(req.UserId))
-	token, err := c.TokenSource.ByUser(user)
-	if (nil != err || token.User() != user) {
-		return errors.New("Incorrect Token")
+	u, err := c.UserSource.ById(user.Id(req.UserId))
+	if (nil == err) {
+		t := user.Token{user.Code(req.Token), u}
+		err = c.TokenChecker.Check(t)
 	}
 
-	return nil
+	return err
 }
 
 type Request struct {

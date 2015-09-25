@@ -18,7 +18,7 @@ func (s *TokenSource) Add(t user.Token) error {
 
 func (s TokenSource) ByUser (u user.User) (user.Token, error) {
 	for _, t := range s.collection {
-		if t.User() == u {
+		if t.User == u {
 			return t, nil
 		}
 	}

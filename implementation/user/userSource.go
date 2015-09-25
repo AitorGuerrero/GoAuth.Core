@@ -16,7 +16,7 @@ func (us *UserSource) Add (u user.User) error {
 	return nil
 }
 
-func (us UserSource) ById (i user.Id) (user.User, error) {
+func (us *UserSource) ById (i user.Id) (user.User, error) {
 	for _, u := range us.collection {
 		if u.Id() == i {
 			return u, nil
