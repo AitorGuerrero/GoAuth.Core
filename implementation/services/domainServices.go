@@ -2,9 +2,9 @@ package services
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/implementation/basic"
+	implementationUser "github.com/AitorGuerrero/UserGo/implementation/user"
 )
-var encrypter = basic.Encryptor{}
+var encrypter = implementationUser.Encryptor{}
 var userPassKeyEncryptor = user.PasskeyEncryptor{encrypter}
 var userFactory = user.Factory{userPassKeyEncryptor}
 var signInValidator = user.SignInValidator{userPassKeyEncryptor}

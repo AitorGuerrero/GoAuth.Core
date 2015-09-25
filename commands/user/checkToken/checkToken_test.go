@@ -4,7 +4,7 @@ import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/commands/user/new"
 	"github.com/AitorGuerrero/UserGo/commands/user/login"
-	"github.com/AitorGuerrero/UserGo/implementation/basic/services"
+	"github.com/AitorGuerrero/UserGo/implementation/services"
 )
 
 var tokenSource = services.TokenSource()

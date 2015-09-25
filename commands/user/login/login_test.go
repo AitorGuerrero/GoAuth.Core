@@ -3,7 +3,7 @@ package login
 import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/implementation/basic/services"
+	"github.com/AitorGuerrero/UserGo/implementation/services"
 )
 
 var source = services.UserSource()

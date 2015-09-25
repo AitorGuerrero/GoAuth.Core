@@ -1,4 +1,4 @@
-package userSource
+package user
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"

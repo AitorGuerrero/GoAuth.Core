@@ -1,4 +1,4 @@
-package inMemory
+package manager
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"

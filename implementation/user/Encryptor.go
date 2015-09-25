@@ -1,4 +1,4 @@
-package basic
+package user
 
 type Encryptor struct {}
 
