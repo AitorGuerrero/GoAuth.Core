@@ -1,4 +1,4 @@
-package newUser
+package new
 
 import (
 	"errors"

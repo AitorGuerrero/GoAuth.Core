@@ -6,15 +6,10 @@ import(
 
 type SignInValidator struct {
 	Encryptor PasskeyEncryptor
-	Source UserSource
 }
 
-func (suv SignInValidator) Validate(i Id, p Passkey) error {
-	u, err := suv.Source.ById(i)
-	if (nil != err) {
-		return errors.New("The user with the that Id doesn't exists")
-	}
-	if suv.Encryptor.Encrypt(i, p) != u.EncryptedPasskey() {
+func (suv SignInValidator) Validate(u User, p Passkey) error {
+	if suv.Encryptor.Encrypt(u.Id(), p) != u.EncryptedPasskey() {
 		return errors.New("The passkey doesn't match")
 	}
 

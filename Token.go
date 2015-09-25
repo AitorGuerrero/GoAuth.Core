@@ -1,4 +1,4 @@
-package session
+package UserGo
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"

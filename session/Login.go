@@ -2,23 +2,28 @@ package session
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
+	"github.com/AitorGuerrero/UserGo"
 )
 
 type Login struct {
 	UserSource user.UserSource
 	Validator user.SignInValidator
-	TokensSource TokenSource
+	TokensSource UserGo.TokenSource
 }
 
-func (l Login) Try(id user.Id, p user.Passkey) (Token, error) {
-	err := l.Validator.Validate(id, p)
+func (l Login) Try(id user.Id, p user.Passkey) (UserGo.Token, error) {
+	t := UserGo.Token{}
+	u, err := l.UserSource.ById(id)
 	if nil != err {
-		return Token{}, err
+		return t, err
 	}
-	u, _ := l.UserSource.ById(id)
-	t, err := l.TokensSource.ByUser(u)
+	err = l.Validator.Validate(u, p)
+	if nil != err {
+		return t, err
+	}
+	t, err = l.TokensSource.ByUser(u)
 	if (nil != err) {
-		t = GenerateNewToken(u)
+		t = UserGo.GenerateNewToken(u)
 		l.TokensSource.Add(t)
 	}
 

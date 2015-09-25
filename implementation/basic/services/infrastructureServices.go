@@ -1,11 +1,11 @@
 package services
 
 import (
+	"github.com/AitorGuerrero/UserGo"
 	inMemoryUserSource "github.com/AitorGuerrero/UserGo/implementation/inMemory/userSource"
 	inMemorySession "github.com/AitorGuerrero/UserGo/implementation/inMemory/session"
 	"github.com/AitorGuerrero/UserGo/implementation/inMemory"
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/session"
 )
 
 var userSource = inMemoryUserSource.UserSource{}
@@ -20,6 +20,6 @@ func ManagerSource() user.ManagerSource {
 	return &managerSource
 }
 
-func TokenSource() session.TokenSource {
+func TokenSource() UserGo.TokenSource {
 	return &tokenSource
 }
