@@ -2,10 +2,11 @@ package newManager
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
+	"github.com/AitorGuerrero/UserGo/user/manager"
 )
 
 type Command struct {
-	Source user.ManagerSource
+	Source manager.ManagerSource
 	Factory user.Factory
 }
 
@@ -19,8 +20,8 @@ func (com Command) Execute(req Request) (error) {
 	uid := user.Id(req.Id)
 	p := user.Passkey(req.Passkey)
 	u := com.Factory.Make(uid, p)
-	ns := user.Namespace(req.Namespace)
-	m := user.Manager{u, ns}
+	ns := manager.Namespace(req.Namespace)
+	m := manager.Manager{u, ns}
 	com.Source.Add(m)
 
 	return nil;

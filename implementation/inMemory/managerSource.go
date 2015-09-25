@@ -2,26 +2,27 @@ package inMemory
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
+	"github.com/AitorGuerrero/UserGo/user/manager"
 
 	"errors"
 )
 
 type ManagerSource struct {
-	collection []user.Manager
+	collection []manager.Manager
 }
 
-func (c *ManagerSource) Add (u user.Manager) error {
+func (c *ManagerSource) Add (u manager.Manager) error {
 	c.collection = append(c.collection, u)
 
 	return nil
 }
 
-func (ms ManagerSource) ById (i user.Id) (user.Manager, error) {
+func (ms ManagerSource) ById (i user.Id) (manager.Manager, error) {
 	for _, m := range ms.collection {
 		if m.Id() == i {
 			return m, nil
 		}
 	}
 
-	return user.Manager{}, errors.New("Not found user")
+	return manager.Manager{}, errors.New("Not found user")
 }

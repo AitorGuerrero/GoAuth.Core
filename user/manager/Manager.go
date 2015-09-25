@@ -1,13 +1,17 @@
-package user
+package manager
+
+import (
+	"github.com/AitorGuerrero/UserGo/user"
+)
 
 type ManagerSource interface {
 	Add(Manager) error
-	ById (i Id) (Manager, error)
+	ById (i user.Id) (Manager, error)
 }
 
 type Namespace string
 
 type Manager struct {
-	User
+	user.User
 	Namespace Namespace
 }
