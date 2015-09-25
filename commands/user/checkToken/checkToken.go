@@ -1,12 +1,11 @@
 package checkToken
 
 import (
-	"github.com/AitorGuerrero/UserGo"
 	"github.com/AitorGuerrero/UserGo/user"
 	"errors"
 )
 type Command struct {
-	TokenSource UserGo.TokenSource
+	TokenSource user.TokenSource
 	UserSource user.UserSource
 }
 

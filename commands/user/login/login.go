@@ -2,11 +2,10 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/session"
 )
 
 type Command struct {
-	Login session.Login
+	Login user.Login
 }
 
 type Request struct {
