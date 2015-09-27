@@ -11,7 +11,7 @@ var id = "userIdentifier"
 var passkey = "passkey"
 var fac = services.UserFactory()
 var tokenSource = services.TokenSource()
-var c = Command{services.UserLogin()}
+var c = Command{services.UserLogin(), services.UserSource()}
 var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
 func TestIfTheUserDoNotExistsShouldThrowAnError(t *t.T) {

@@ -1,18 +1,13 @@
 package user
 
 type Login struct {
-	UserSource UserSource
 	Validator SignInValidator
 	TokensSource TokenSource
 }
 
-func (l Login) Try(id Id, p Passkey) (Token, error) {
+func (l Login) Try(u User, p Passkey) (Token, error) {
 	t := Token{}
-	u, err := l.UserSource.Get(id)
-	if nil != err {
-		return t, err
-	}
-	err = l.Validator.Validate(u, p)
+	err := l.Validator.Validate(u, p)
 	if nil != err {
 		return t, err
 	}

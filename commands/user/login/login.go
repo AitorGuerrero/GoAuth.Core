@@ -6,6 +6,7 @@ import (
 
 type Command struct {
 	Login user.Login
+	UserSource user.UserSource
 }
 
 type Request struct {
@@ -19,9 +20,11 @@ type Response struct {
 
 func (c Command) Execute(req Request) (Response, error) {
 	res := Response{}
-	id := user.Id(req.Id)
-	p := user.Passkey(req.Passkey)
-	t, err := c.Login.Try(id, p)
+	u, err := c.UserSource.Get(user.Id(req.Id))
+	if nil != err {
+		return res, err
+	}
+	t, err := c.Login.Try(u, user.Passkey(req.Passkey))
 	res.SessionToken = string(t.Code)
 
 	return res, err
