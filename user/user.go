@@ -2,7 +2,7 @@ package user
 
 type UserSource interface {
 	Add (User) error
-	ById(Id) (User, error)
+	Get(Id) (User, error)
 }
 
 type Id string

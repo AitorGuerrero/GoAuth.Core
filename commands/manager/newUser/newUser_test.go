@@ -18,7 +18,7 @@ func TestShouldPersistInASource(t *t.T) {
 	if nil != err {
 		t.Error(err)
 	}
-	u, err := userSource.ById(user.Id(id));
+	u, err := userSource.Get(user.Id(id));
 	if nil != err {
 		t.Error(err)
 	}

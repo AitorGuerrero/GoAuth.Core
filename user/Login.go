@@ -8,7 +8,7 @@ type Login struct {
 
 func (l Login) Try(id Id, p Passkey) (Token, error) {
 	t := Token{}
-	u, err := l.UserSource.ById(id)
+	u, err := l.UserSource.Get(id)
 	if nil != err {
 		return t, err
 	}

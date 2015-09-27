@@ -9,7 +9,7 @@ type Command struct {
 }
 
 func (c Command) Execute(req Request) (error) {
-	u, err := c.UserSource.ById(user.Id(req.UserId))
+	u, err := c.UserSource.Get(user.Id(req.UserId))
 	if (nil == err) {
 		t := user.Token{user.TokenCode(req.Token), u}
 		err = c.TokenChecker.Check(t)
