@@ -4,7 +4,7 @@ import (
 	"code.google.com/p/go-uuid/uuid"
 )
 func GenerateNewToken (user User) Token {
-	return Token{Code(uuid.NewRandom()), user}
+	return Token{TokenCode(uuid.NewRandom()), user}
 }
 
 type TokenSource interface {
@@ -12,9 +12,9 @@ type TokenSource interface {
 	ByUser (u User) (Token, error)
 }
 
-type Code uuid.UUID
+type TokenCode uuid.UUID
 
 type Token struct {
-	Code Code
+	Code TokenCode
 	User User
 }
