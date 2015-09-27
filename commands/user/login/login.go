@@ -25,7 +25,7 @@ func (c Command) Execute(req Request) (res Response, err error) {
 	)
 	res.SessionToken = string(tokenCode)
 
-	return res, err
+	return
 }
 
 func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up user.Passkey) (tc user.TokenCode, err error) {
