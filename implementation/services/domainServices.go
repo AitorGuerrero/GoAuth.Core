@@ -8,7 +8,7 @@ var encrypter = implementationUser.Encryptor{}
 var userPassKeyEncryptor = user.PasskeyEncryptor{encrypter}
 var userFactory = user.Factory{userPassKeyEncryptor}
 var signInValidator = user.SignInValidator{userPassKeyEncryptor}
-var login = user.Login{signInValidator}
+var login = user.Login{signInValidator, &userSource}
 var tokenChecker = user.TokenChecker{}
 
 func UserFactory() user.Factory {
