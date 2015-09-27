@@ -8,22 +8,22 @@ import (
 
 var id = "userIdentifier";
 var passkey = "userPasskey";
+var namespace = "userPasskey";
 
-var userSource = services.UserSource();
+var managerSource = services.ManagerSource();
 
-var com = Command{userSource, services.UserFactory()};
+var com = Command{managerSource, services.UserFactory()};
 
 func TestShouldPersistInASource(t *t.T) {
-	err := com.Execute(Request{id, passkey});
+	err := com.Execute(Request{id, passkey, namespace});
 	if nil != err {
 		t.Error(err)
 	}
-	u, err := userSource.ById(user.Id(id));
+	manager, err := managerSource.ById(user.Id(id));
 	if nil != err {
 		t.Error(err)
 	}
-	if string(u.Id()) != id {
+	if string(manager.Id()) != id {
 		t.Error("the user stored is not the same")
 	}
 }
-

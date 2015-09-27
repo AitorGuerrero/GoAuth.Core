@@ -1,4 +1,4 @@
-package newManager
+package newUser
 
 import (
 	t "testing"
@@ -8,22 +8,22 @@ import (
 
 var id = "userIdentifier";
 var passkey = "userPasskey";
-var namespace = "userPasskey";
 
-var managerSource = services.ManagerSource();
+var userSource = services.UserSource();
 
-var com = Command{managerSource, services.UserFactory()};
+var com = Command{userSource, services.UserFactory()};
 
 func TestShouldPersistInASource(t *t.T) {
-	err := com.Execute(Request{id, passkey, namespace});
+	err := com.Execute(Request{id, passkey});
 	if nil != err {
 		t.Error(err)
 	}
-	manager, err := managerSource.ById(user.Id(id));
+	u, err := userSource.ById(user.Id(id));
 	if nil != err {
 		t.Error(err)
 	}
-	if string(manager.Id()) != id {
+	if string(u.Id()) != id {
 		t.Error("the user stored is not the same")
 	}
 }
+

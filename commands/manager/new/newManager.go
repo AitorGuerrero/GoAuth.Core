@@ -1,4 +1,4 @@
-package newManager
+package new
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
