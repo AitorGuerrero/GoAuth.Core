@@ -2,6 +2,7 @@ package user
 
 type UserSource interface {
 	Add (User) error
+	Persist (User) error
 	Get(Id) (User, error)
 }
 

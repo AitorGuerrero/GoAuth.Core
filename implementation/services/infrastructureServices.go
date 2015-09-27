@@ -6,8 +6,7 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
 )
-
-var userSource = implementationUser.UserSource{}
+var userSource = implementationUser.UserSource{make(map[user.Id]user.User)}
 var managerSource = implementationManager.ManagerSource{}
 var tokenSource = implementationUser.TokenSource{}
 

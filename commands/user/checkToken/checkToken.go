@@ -12,7 +12,7 @@ func (c Command) Execute(req Request) (error) {
 	u, err := c.UserSource.Get(user.Id(req.UserId))
 	if (nil == err) {
 		t := user.Token{user.TokenCode(req.Token), u}
-		err = c.TokenChecker.Check(t)
+		err = c.TokenChecker.Check(u, t)
 	}
 
 	return err

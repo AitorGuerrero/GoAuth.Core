@@ -3,25 +3,32 @@ package user
 import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"errors"
-//	"fmt"
 )
 
 type UserSource struct {
-	collection []user.User
+	Collection map[user.Id]user.User
 }
 
 func (us *UserSource) Add (u user.User) error {
-	us.collection = append(us.collection, u)
+	if us.Collection[u.Id()].Id() == u.Id() {
+		return errors.New("Existing user")
+	}
+	us.Persist(u)
 
 	return nil
 }
 
 func (us *UserSource) Get (i user.Id) (user.User, error) {
-	for _, u := range us.collection {
-		if u.Id() == i {
-			return u, nil
-		}
+	u := us.Collection[i]
+	if u.Id() != i {
+		return u, errors.New("Invalid User id")
 	}
 
-	return user.User{}, errors.New("Not found user "+string(i))
+	return u, nil
+}
+
+func (us *UserSource) Persist (u user.User) error {
+	us.Collection[u.Id()] = u
+
+	return nil
 }
