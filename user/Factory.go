@@ -5,5 +5,5 @@ type Factory struct {
 }
 
 func (f Factory) Make (id Id, passkey Passkey) User {
-	return User{id, f.Encryptor.Encrypt(id, passkey)};
+	return User{id, f.Encryptor.Encrypt(id, passkey), Token{}};
 }

@@ -2,20 +2,16 @@ package user
 
 type Login struct {
 	Validator SignInValidator
-	TokensSource TokenSource
 }
 
-func (l Login) Try(u User, p Passkey) (Token, error) {
-	t := Token{}
+func (l Login) Try(u User, p Passkey) (User, error) {
 	err := l.Validator.Validate(u, p)
 	if nil != err {
-		return t, err
+		return User{}, err
 	}
-	t, err = l.TokensSource.ByUser(u)
-	if (nil != err) {
-		t = GenerateNewToken(u)
-		l.TokensSource.Add(t)
+	if (false == u.HasToken()) {
+		u.GenerateToken()
 	}
 
-	return t, nil
+	return u, nil
 }

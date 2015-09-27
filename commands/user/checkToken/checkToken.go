@@ -10,12 +10,12 @@ type Command struct {
 
 func (c Command) Execute(req Request) (error) {
 	u, err := c.UserSource.Get(user.Id(req.UserId))
-	if (nil == err) {
-		t := user.Token{user.TokenCode(req.Token), u}
-		err = c.TokenChecker.Check(u, t)
+	if (nil != err) {
+		return err
 	}
+	t := user.Token{user.TokenCode(req.Token)}
 
-	return err
+	return c.TokenChecker.Check(u, t)
 }
 
 type Request struct {

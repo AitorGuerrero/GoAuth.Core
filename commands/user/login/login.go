@@ -24,8 +24,9 @@ func (c Command) Execute(req Request) (Response, error) {
 	if nil != err {
 		return res, err
 	}
-	t, err := c.Login.Try(u, user.Passkey(req.Passkey))
-	res.SessionToken = string(t.Code)
+	u2, err2 := c.Login.Try(u, user.Passkey(req.Passkey))
+	c.UserSource.Persist(u2)
+	res.SessionToken = string(u2.Token().Code)
 
-	return res, err
+	return res, err2
 }

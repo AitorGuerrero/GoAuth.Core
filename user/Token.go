@@ -3,18 +3,21 @@ package user
 import (
 	"code.google.com/p/go-uuid/uuid"
 )
-func GenerateNewToken (user User) Token {
-	return Token{TokenCode(uuid.NewRandom()), user}
-}
-
-type TokenSource interface {
-	Add(t Token) error
-	ByUser (u User) (Token, error)
-}
 
 type TokenCode uuid.UUID
 
 type Token struct {
 	Code TokenCode
-	User User
+}
+
+func (u User) Token() Token {
+	return u.token
+}
+
+func (u User) HasToken() bool {
+	return "" != string(u.token.Code)
+}
+
+func (u *User) GenerateToken() {
+	u.token = Token{TokenCode(uuid.NewRandom())}
 }

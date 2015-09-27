@@ -13,6 +13,7 @@ type cryptedPasskey string
 type User struct {
 	id Id
 	passkey cryptedPasskey
+	token Token
 }
 
 func (u User) Id() Id {
@@ -22,4 +23,3 @@ func (u User) Id() Id {
 func (u User) EncryptedPasskey() cryptedPasskey {
 	return u.passkey
 }
-

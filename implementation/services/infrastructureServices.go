@@ -8,7 +8,6 @@ import (
 )
 var userSource = implementationUser.UserSource{make(map[user.Id]user.User)}
 var managerSource = implementationManager.ManagerSource{}
-var tokenSource = implementationUser.TokenSource{}
 
 func UserSource() user.UserSource {
 	return &userSource
@@ -16,8 +15,4 @@ func UserSource() user.UserSource {
 
 func ManagerSource() manager.ManagerSource {
 	return &managerSource
-}
-
-func TokenSource() user.TokenSource {
-	return &tokenSource
 }

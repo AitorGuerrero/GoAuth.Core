@@ -4,13 +4,13 @@ import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/implementation/services"
+	"fmt"
 )
 
 var source = services.UserSource()
 var id = "userIdentifier"
 var passkey = "passkey"
 var fac = services.UserFactory()
-var tokenSource = services.TokenSource()
 var c = Command{services.UserLogin(), services.UserSource()}
 var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
@@ -41,8 +41,9 @@ func TestShouldReturnASessionToken(t * t.T) {
 	if (res.SessionToken == "") {
 		t.Error("Should return a token")
 	}
-	_, err := tokenSource.ByUser(u)
-	if (nil != err) {
+	u, _ := source.Get(u.Id())
+	fmt.Print("T: ", u.HasToken(), "\n")
+	if (string(u.Token().Code) != res.SessionToken) {
 		t.Error("Should store the token")
 	}
 }
