@@ -43,31 +43,17 @@ func (c Command) getUserIfCorrectLogin(uid user.Id, up user.Passkey) (u user.Use
 	if(nil != err) {
 		return
 	}
-	u, err = c.persistUser(u)
+	err = c.UserSource.Persist(u)
 
 	return
 }
 
-
-func (c Command) persistUser(u user.User) (user.User, error) {
-	c.UserSource.Persist(u)
-	return u, nil
-}
-
 func (c Command) tryLogin(uid user.Id, p user.Passkey) (u user.User, err error) {
-	u, err = c.getUser(uid)
+	u, err = c.UserSource.Get(uid)
 	if(nil != err) {
 		return
 	}
 	u, err = c.Login.Try(u, p)
 
 	return
-}
-
-func (c Command) getUser(uid user.Id) (user.User, error) {
-	return c.UserSource.Get(uid)
-}
-
-func (c Command) getTokenCodeFromUser(u user.User) user.TokenCode {
-	return u.Token().Code
 }
