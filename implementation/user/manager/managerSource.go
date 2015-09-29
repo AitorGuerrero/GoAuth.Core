@@ -11,18 +11,17 @@ type Source struct {
 	Collection map[string]*manager.Manager
 }
 
-func (s *Source) Add (m *manager.Manager) (err error) {
+func (s *Source) Add (m *manager.Manager) error {
 	if s.ExistsWithNamespace(m.Namespace) {
-		err = manager.ExistentNamespaceError{}
-		return
+		return manager.ExistentNamespaceError{}
+
 	}
 	if s.Collection[string(m.Id())] != nil {
-		err = manager.DuplicatedIdError{}
-		return
+		return manager.DuplicatedIdError{}
 	}
 	s.Collection[string(m.Id())] = m
 
-	return
+	return nil
 }
 
 func (ms Source) Get (i user.Id) (*manager.Manager, error) {
