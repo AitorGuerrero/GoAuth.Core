@@ -17,7 +17,7 @@ var com = Command{managerSource, services.UserFactory()}
 
 func TestIfTheIdIsAInvalidUuidShouldThrowAnError(t *t.T) {
 	err := com.Execute(Request{"incorrectUUID", passkey, namespace})
-	if nil == err {
+	if _, ok := err.(IncorrectIdError); !ok{
 		t.Error()
 	}
 }
