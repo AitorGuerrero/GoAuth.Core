@@ -22,6 +22,18 @@ func TestIfTheIdIsAInvalidUuidShouldThrowAnError(t *t.T) {
 	}
 }
 
+func TestIfNamespaceIsRepeatedShouldReturnError(t *t.T) {
+	com.Execute(Request{id, passkey, namespace})
+	err := com.Execute(Request{
+		"c6384d58-fd79-49cb-a111-b08564e4db26",
+		passkey,
+		namespace,
+	})
+	if nil == err {
+		t.Error()
+	}
+}
+
 func TestIfPasskeyIsBlankShouldReturnAError(t *t.T) {
 	err := com.Execute(Request{id, "", namespace})
 	if nil == err {
@@ -33,7 +45,7 @@ func TestShouldAddInASource(t *t.T) {
 	com.Execute(Request{id, passkey, namespace})
 	manager, err := managerSource.Get(uuidId)
 	if nil != err {
-		t.Error("Error loading the user:", err)
+		t.Error(err, uuidId, managerSource)
 		return
 	}
 	if !manager.Id().Equal(uuidId) {
@@ -46,6 +58,6 @@ func TestShouldCreateAToken(t * t.T) {
 	com.Execute(Request{id, passkey, namespace})
 	manager, _ := managerSource.Get(uuidId)
 	if !manager.HasToken() {
-		t.Error("Should create a token")
+		t.Error()
 	}
 }

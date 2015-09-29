@@ -7,8 +7,9 @@ import (
 )
 
 type Source interface {
-	Add(*Manager) error
+	Add (*Manager) error
 	Get (i user.Id) (*Manager, error)
+	ExistsWithNamespace(user.Namespace) bool
 }
 
 type Manager struct {

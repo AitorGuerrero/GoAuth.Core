@@ -22,7 +22,11 @@ func (com Command) Execute(req Request) (err error) {
 	if nil != err {
 		return
 	}
-	if (req.Passkey == "") {
+	if req.Passkey == "" {
+		err = errors.New("Passkey should not be blank")
+		return
+	}
+	if com.Source.ExistsWithNamespace(user.Namespace(req.Namespace)) {
 		err = errors.New("Passkey should not be blank")
 		return
 	}

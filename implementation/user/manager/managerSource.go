@@ -28,5 +28,15 @@ func (ms Source) Get (i user.Id) (*manager.Manager, error) {
 		}
 	}
 
-	return &manager.Manager{}, errors.New("Not found user")
+	return &manager.Manager{}, errors.New("Not found manager")
+}
+
+func (ms Source) ExistsWithNamespace(n user.Namespace) bool {
+	for _, m := range ms.Collection {
+		if m.Namespace.Equal(n) {
+			return true
+		}
+	}
+
+	return false
 }
