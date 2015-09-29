@@ -29,14 +29,14 @@ func TestIfNamespaceIsRepeatedShouldReturnError(t *t.T) {
 		passkey,
 		namespace,
 	})
-	if nil == err {
+	if _, ok := err.(ExistingNamespaceError); !ok {
 		t.Error()
 	}
 }
 
 func TestIfPasskeyIsBlankShouldReturnAError(t *t.T) {
 	err := com.Execute(Request{id, "", namespace})
-	if nil == err {
+	if _, ok := err.(EmptyPasskeyError); !ok {
 		t.Error()
 	}
 }

@@ -3,7 +3,6 @@ package newManager
 import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
-	"errors"
 )
 
 type Command struct {
@@ -23,11 +22,11 @@ func (com Command) Execute(req Request) (err error) {
 		return
 	}
 	if req.Passkey == "" {
-		err = errors.New("Passkey should not be blank")
+		err = EmptyPasskeyError{}
 		return
 	}
 	if com.Source.ExistsWithNamespace(user.Namespace(req.Namespace)) {
-		err = errors.New("Passkey should not be blank")
+		err = ExistingNamespaceError{}
 		return
 	}
 	m := manager.Manager{
