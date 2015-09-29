@@ -18,7 +18,7 @@ var com = Command{managerSource, services.UserFactory()}
 func TestIfTheIdIsAInvalidUuidShouldThrowAnError(t *t.T) {
 	err := com.Execute(Request{"incorrectUUID", passkey, namespace})
 	if nil == err {
-		t.Error("Should return an error")
+		t.Error()
 	}
 }
 
@@ -33,7 +33,7 @@ func TestShouldAddInASource(t *t.T) {
 	com.Execute(Request{id, passkey, namespace})
 	manager, err := managerSource.Get(uuidId)
 	if nil != err {
-		t.Error(err, uuidId, managerSource)
+		t.Error("Error loading the user:", err)
 		return
 	}
 	if !manager.Id().Equal(uuidId) {
