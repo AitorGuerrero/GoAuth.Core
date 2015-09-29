@@ -22,7 +22,7 @@ func (c Command) Execute(r Request) (err error) {
 	if nil != err {
 		return
 	}
-	u := c.Factory.Make(user.Id(r.UserId), user.Passkey(r.Passkey))
+	u := c.Factory.Make(user.Id(r.UserId), r.Passkey)
 	c.UserSource.Add(u)
 	m.AddUser(u)
 	c.ManagerSource.Persist(m)

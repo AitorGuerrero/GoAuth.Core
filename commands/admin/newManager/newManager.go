@@ -3,6 +3,7 @@ package newManager
 import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
+	"errors"
 )
 
 type Command struct {
@@ -21,8 +22,12 @@ func (com Command) Execute(req Request) (err error) {
 	if nil != err {
 		return
 	}
+	if (req.Passkey == "") {
+		err = errors.New("Passkey should not be blank")
+		return
+	}
 	m := manager.Manager{
-		com.UserFactory.Make(id, user.Passkey(req.Passkey)),
+		com.UserFactory.Make(id, req.Passkey),
 		user.Namespace(req.Namespace),
 		map[string]user.User{},
 	}

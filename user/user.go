@@ -5,19 +5,17 @@ import (
 	"errors"
 )
 
+type Id uuid.UUID
+type Passkey string
 type Source interface {
 	Add (User) error
 	Persist (User) error
 	Get(Id) (User, error)
 }
 
-type Id uuid.UUID
-type Passkey string
-type cryptedPasskey string
-
 type User struct {
 	id Id
-	passkey cryptedPasskey
+	passkey Passkey
 	token Token
 	namespaces []Namespace
 }
@@ -43,7 +41,7 @@ func ParseId (s string) (i Id, err error) {
 	return
 }
 
-func (u User) EncryptedPasskey() cryptedPasskey {
+func (u User) EncryptedPasskey() Passkey {
 	return u.passkey
 }
 

@@ -22,6 +22,13 @@ func TestIfTheIdIsAInvalidUuidShouldThrowAnError(t *t.T) {
 	}
 }
 
+func TestIfPasskeyIsBlankShouldReturnAError(t *t.T) {
+	err := com.Execute(Request{id, "", namespace})
+	if nil == err {
+		t.Error()
+	}
+}
+
 func TestShouldAddInASource(t *t.T) {
 	err := com.Execute(Request{id, passkey, namespace})
 	if nil != err {

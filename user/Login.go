@@ -7,7 +7,7 @@ type Login struct {
 	UserSource Source
 }
 
-func (l Login) Try(uid Id, p Passkey, n Namespace) (uo User, err error) {
+func (l Login) Try(uid Id, p string, n Namespace) (uo User, err error) {
 
 	// Demo of functional programming
 	err = l.getUser(uid, func(u User) {
@@ -30,7 +30,7 @@ func (l Login) ifHasNotToken(u User, fn func()) {
 	}
 }
 
-func (l Login) ifValidates(u User, p Passkey, fn func()) (err error) {
+func (l Login) ifValidates(u User, p string, fn func()) (err error) {
 	err = l.Validator.Validate(u, p)
 	if nil == err {
 		fn()

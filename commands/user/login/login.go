@@ -22,7 +22,7 @@ type Response struct {
 func (c Command) Execute(req Request) (res Response, err error) {
 	tokenCode, err := c.getTokenCodeFromUserIfCorrectLogin(
 		user.Id(req.Id),
-		user.Passkey(req.Passkey),
+		req.Passkey,
 		user.Namespace(req.Namespace),
 	)
 	if(nil != err) {
@@ -33,7 +33,7 @@ func (c Command) Execute(req Request) (res Response, err error) {
 	return
 }
 
-func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up user.Passkey, n user.Namespace) (tc user.TokenCode, err error) {
+func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (tc user.TokenCode, err error) {
 	u, err := c.getUserIfCorrectLogin(uid, up, n)
 	if nil != err {
 		return
@@ -43,7 +43,7 @@ func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up user.Passkey
 	return
 }
 
-func (c Command) getUserIfCorrectLogin(uid user.Id, up user.Passkey, n user.Namespace) (u user.User, err error) {
+func (c Command) getUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (u user.User, err error) {
 	u, err = c.Login.Try(uid, up, n)
 	if(nil != err) {
 		return
