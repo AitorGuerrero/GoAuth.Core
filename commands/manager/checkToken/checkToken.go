@@ -17,7 +17,7 @@ type Request struct {
 func (c Command) Execute(req Request) (error) {
 	u, err := c.UserSource.Get(user.Id(req.UserId))
 	if (nil != err) {
-		return err
+		return InvalidIdError{}
 	}
 	t := user.Token{user.TokenCode(req.Token)}
 	n := user.Namespace(req.Namespace)

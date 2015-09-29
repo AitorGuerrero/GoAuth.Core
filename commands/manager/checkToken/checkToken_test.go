@@ -8,10 +8,10 @@ import (
 var com = Command{services.TokenChecker(), services.UserSource()}
 var req = Request{}
 
-func TestIfTheTokenDoesNotExistsShouldReturnAnError (t *t.T) {
+func TestIfTheUserDoesNotExistsShouldReturnAnError (t *t.T) {
 	req.Token = "PisToken"
 	err := com.Execute(req)
-	if nil == err {
-		t.Error("S ror")
+	if _, ok := err.(InvalidIdError); !ok {
+		t.Error()
 	}
 }
