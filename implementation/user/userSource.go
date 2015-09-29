@@ -6,11 +6,11 @@ import (
 )
 
 type Source struct {
-	Collection map[user.Id]user.User
+	Collection map[string]user.User
 }
 
 func (us *Source) Add (u user.User) error {
-	if us.Collection[u.Id()].Id() == u.Id() {
+	if us.Collection[string(u.Id())].Id().Equal(u.Id()) {
 		return errors.New("Existing user")
 	}
 	us.Persist(u)
@@ -18,9 +18,9 @@ func (us *Source) Add (u user.User) error {
 	return nil
 }
 
-func (us *Source) Get (i user.Id) (user.User, error) {
-	u := us.Collection[i]
-	if u.Id() != i {
+func (us Source) Get (i user.Id) (user.User, error) {
+	u := us.Collection[string(i)]
+	if !u.Id().Equal(i) {
 		return u, errors.New("Invalid User id")
 	}
 
@@ -28,7 +28,7 @@ func (us *Source) Get (i user.Id) (user.User, error) {
 }
 
 func (us *Source) Persist (u user.User) error {
-	us.Collection[u.Id()] = u
+	us.Collection[string(u.Id())] = u
 
 	return nil
 }

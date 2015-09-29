@@ -18,7 +18,7 @@ type Request struct {
 }
 
 func (c Command) Execute(r Request) (err error) {
-	m, err := c.ManagerSource.ById(user.Id(r.ManagerId))
+	m, err := c.ManagerSource.Get(user.Id(r.ManagerId))
 	if nil != err {
 		return
 	}

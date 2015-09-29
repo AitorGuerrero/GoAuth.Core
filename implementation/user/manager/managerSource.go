@@ -8,11 +8,11 @@ import (
 )
 
 type Source struct {
-	Collection map[user.Id]manager.Manager
+	Collection map[string]manager.Manager
 }
 
 func (s *Source) Add (m manager.Manager) (err error) {
-	if s.Collection[m.Id()].Id() == m.Id() {
+	if s.Collection[string(m.Id())].Id().Equal(m.Id()) {
 		err = errors.New("Existing user")
 		return
 	}
@@ -21,9 +21,9 @@ func (s *Source) Add (m manager.Manager) (err error) {
 	return
 }
 
-func (ms Source) ById (i user.Id) (manager.Manager, error) {
+func (ms Source) Get (i user.Id) (manager.Manager, error) {
 	for _, m := range ms.Collection {
-		if m.Id() == i {
+		if m.Id().Equal(i) {
 			return m, nil
 		}
 	}
@@ -32,7 +32,7 @@ func (ms Source) ById (i user.Id) (manager.Manager, error) {
 }
 
 func (s *Source) Persist (m manager.Manager) error {
-	s.Collection[m.Id()] = m
+	s.Collection[string(m.Id())] = m
 
 	return nil
 }

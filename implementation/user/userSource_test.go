@@ -23,7 +23,7 @@ func TestAddingAUserShouldStoreInCollection(t *t.T) {
 func TestShouldBeAbleToRetrieveAStoredUserByItsIdentifier(t *t.T) {
 	u := user.New(identifier, passkey)
 	s.Add(u);
-	ru, error := s.ById(identifier);
+	ru, error := s.Get(identifier);
 	if error != nil {
 		t.Error("The user should be in the source")
 	}

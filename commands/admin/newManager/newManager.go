@@ -7,7 +7,7 @@ import (
 
 type Command struct {
 	Source manager.Source
-	Factory user.Factory
+	UserFactory user.Factory
 }
 
 type Request struct {
@@ -16,12 +16,17 @@ type Request struct {
 	Namespace string
 }
 
-func (com Command) Execute(req Request) (error) {
-	uid := user.Id(req.Id)
-	p := user.Passkey(req.Passkey)
-	u := com.Factory.Make(uid, p)
-	ns := user.Namespace(req.Namespace)
-	m := manager.Manager{u, ns, map[user.Id]user.User{}}
+func (com Command) Execute(req Request) (err error) {
+	id, err := user.ParseId(req.Id);
+	if nil != err {
+		return
+	}
+	m := manager.Manager{
+		com.UserFactory.Make(id, user.Passkey(req.Passkey)),
+		user.Namespace(req.Namespace),
+		map[string]user.User{},
+	}
+	m.GenerateToken()
 	com.Source.Add(m)
 
 	return nil;

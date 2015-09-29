@@ -1,12 +1,17 @@
 package user
 
+import (
+	"code.google.com/p/go-uuid/uuid"
+	"errors"
+)
+
 type Source interface {
 	Add (User) error
 	Persist (User) error
 	Get(Id) (User, error)
 }
 
-type Id string
+type Id uuid.UUID
 type Passkey string
 type cryptedPasskey string
 
@@ -27,6 +32,15 @@ func (i Id) Equal (i2 Id) bool {
 
 func (i Id) IsEmpty () bool {
 	return "" == string(i)
+}
+
+func ParseId (s string) (i Id, err error) {
+	i = Id(uuid.Parse(s));
+	if nil == i {
+		err = errors.New("Invalid Id")
+	}
+
+	return
 }
 
 func (u User) EncryptedPasskey() cryptedPasskey {
