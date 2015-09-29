@@ -22,6 +22,14 @@ func TestIfTheIdIsAInvalidUuidShouldThrowAnError(t *t.T) {
 	}
 }
 
+func TestIfAManagerExistsWithThatIdShouldReturnError(t *t.T) {
+	com.Execute(Request{id, passkey, namespace})
+	err := com.Execute(Request{id, passkey, "second-namespace"})
+	if _, ok := err.(DuplicatedIdError); !ok{
+		t.Error()
+	}
+}
+
 func TestIfNamespaceIsRepeatedShouldReturnError(t *t.T) {
 	com.Execute(Request{id, passkey, namespace})
 	err := com.Execute(Request{

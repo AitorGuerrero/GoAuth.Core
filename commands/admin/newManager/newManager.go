@@ -26,10 +26,6 @@ func (com Command) Execute(req Request) (err error) {
 		err = EmptyPasskeyError{}
 		return
 	}
-	if com.Source.ExistsWithNamespace(user.Namespace(req.Namespace)) {
-		err = ExistingNamespaceError{}
-		return
-	}
 	m := manager.Manager{
 		com.UserFactory.Make(id, req.Passkey),
 		user.Namespace(req.Namespace),
@@ -37,6 +33,12 @@ func (com Command) Execute(req Request) (err error) {
 	}
 	m.GenerateToken()
 	err = com.Source.Add(&m)
+	if _, ok := err.(manager.ExistentNamespaceError); ok {
+		err = ExistingNamespaceError{};
+	}
+	if _, ok := err.(manager.DuplicatedIdError); ok {
+		err = DuplicatedIdError{};
+	}
 
 	return err;
 }

@@ -12,8 +12,12 @@ type Source struct {
 }
 
 func (s *Source) Add (m *manager.Manager) (err error) {
+	if s.ExistsWithNamespace(m.Namespace) {
+		err = manager.ExistentNamespaceError{}
+		return
+	}
 	if s.Collection[string(m.Id())] != nil {
-		err = errors.New("Existing user")
+		err = manager.DuplicatedIdError{}
 		return
 	}
 	s.Collection[string(m.Id())] = m
