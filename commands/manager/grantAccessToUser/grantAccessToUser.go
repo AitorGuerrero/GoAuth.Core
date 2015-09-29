@@ -1,4 +1,4 @@
-package newUser
+package grantAccessToUser
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
@@ -6,15 +6,13 @@ import (
 )
 
 type Command struct {
+	UserSource user.Source
 	ManagerSource manager.ManagerSource
-	UserSource user.UserSource
-	Factory user.Factory
 }
 
 type Request struct {
 	ManagerId string
-	UserId string
-	Passkey string
+	Namespace string
 }
 
 func (c Command) Execute(r Request) (err error) {
@@ -22,12 +20,7 @@ func (c Command) Execute(r Request) (err error) {
 	if nil != err {
 		return
 	}
-	uid := user.Id(r.Id);
-	p := user.Passkey(r.Passkey)
-	u := c.Factory.Make(uid, p)
-	c.UserSource.Add(u)
-	m.AddUser(u)
-	c.ManagerSource.Persist(m)
+	m.GrantAccessToUser(u, user.Namespace(r.Namespace))
 
-	return nil;
+	return
 }
