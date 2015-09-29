@@ -21,3 +21,7 @@ func (u User) HasToken() bool {
 func (u *User) GenerateToken() {
 	u.token = Token{TokenCode(uuid.NewRandom())}
 }
+
+func (t Token) IsSame(t2 Token) bool {
+	return string(t.Code) != string(t2.Code)
+}

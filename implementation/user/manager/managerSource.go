@@ -7,17 +7,17 @@ import (
 	"errors"
 )
 
-type ManagerSource struct {
+type Source struct {
 	collection []manager.Manager
 }
 
-func (c *ManagerSource) Add (u manager.Manager) error {
+func (c *Source) Add (u manager.Manager) error {
 	c.collection = append(c.collection, u)
 
 	return nil
 }
 
-func (s *ManagerSource) Add (m manager.Manager) (err error) {
+func (s *Source) Add (m manager.Manager) (err error) {
 	if s.collection[m.Id()].Id() == m.Id() {
 		err = errors.New("Existing user")
 		return
@@ -27,7 +27,7 @@ func (s *ManagerSource) Add (m manager.Manager) (err error) {
 	return
 }
 
-func (ms ManagerSource) ById (i user.Id) (manager.Manager, error) {
+func (ms Source) ById (i user.Id) (manager.Manager, error) {
 	for _, m := range ms.collection {
 		if m.Id() == i {
 			return m, nil
@@ -37,7 +37,7 @@ func (ms ManagerSource) ById (i user.Id) (manager.Manager, error) {
 	return manager.Manager{}, errors.New("Not found user")
 }
 
-func (s *ManagerSource) Persist (m manager.Manager) error {
+func (s *Source) Persist (m manager.Manager) error {
 	s.collection[m.Id()] = m
 
 	return nil

@@ -7,12 +7,12 @@ import (
 	"github.com/AitorGuerrero/UserGo/user/manager"
 )
 var userSource = implementationUser.UserSource{make(map[user.Id]user.User)}
-var managerSource = implementationManager.ManagerSource{}
+var managerSource = implementationManager.Source{}
 
 func UserSource() user.UserSource {
 	return &userSource
 }
 
-func ManagerSource() manager.ManagerSource {
+func ManagerSource() manager.Source {
 	return &managerSource
 }

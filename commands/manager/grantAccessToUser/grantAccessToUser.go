@@ -7,7 +7,7 @@ import (
 
 type Command struct {
 	UserSource user.Source
-	ManagerSource manager.ManagerSource
+	ManagerSource manager.Source
 }
 
 type Request struct {

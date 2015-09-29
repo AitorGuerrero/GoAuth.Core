@@ -6,7 +6,7 @@ import (
 )
 
 type Command struct {
-	ManagerSource manager.ManagerSource
+	ManagerSource manager.Source
 	UserSource user.UserSource
 	Factory user.Factory
 }

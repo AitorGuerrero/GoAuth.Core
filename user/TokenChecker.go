@@ -7,10 +7,10 @@ import (
 type TokenChecker struct {
 }
 
-func (tc TokenChecker) Check(u User, t Token) error {
-	if (false == u.HasToken() || string(u.token.Code) != string(t.Code)) {
-		return errors.New("Incorrect Token")
+func (tc TokenChecker) Check(u User, t Token, n Namespace) (err error) {
+	if !u.HasToken() || !u.token.IsSame(t) || !u.hasAccessTo(n) {
+		err = errors.New("Incorrect Token")
 	}
 
-	return nil
+	return err
 }

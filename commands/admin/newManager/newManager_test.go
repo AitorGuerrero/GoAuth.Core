@@ -1,4 +1,4 @@
-package new
+package newManager
 
 import (
 	t "testing"
@@ -10,7 +10,7 @@ var id = "userIdentifier";
 var passkey = "userPasskey";
 var namespace = "userPasskey";
 
-var managerSource = services.ManagerSource();
+var managerSource = services.Source();
 
 var com = Command{managerSource, services.UserFactory()};
 

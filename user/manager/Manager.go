@@ -6,7 +6,7 @@ import (
 	"errors"
 )
 
-type ManagerSource interface {
+type Source interface {
 	Add(Manager) error
 	ById (i user.Id) (Manager, error)
 	Persist(Manager)

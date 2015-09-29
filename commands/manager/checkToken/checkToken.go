@@ -8,17 +8,18 @@ type Command struct {
 	UserSource user.UserSource
 }
 
+type Request struct {
+	UserId string
+	Token string
+	Namespace string
+}
+
 func (c Command) Execute(req Request) (error) {
 	u, err := c.UserSource.Get(user.Id(req.UserId))
 	if (nil != err) {
 		return err
 	}
 	t := user.Token{user.TokenCode(req.Token)}
-
-	return c.TokenChecker.Check(u, t)
-}
-
-type Request struct {
-	UserId string
-	Token string
+	n := user.Namespace(req.Namespace)
+	return c.TokenChecker.Check(u, t, n)
 }

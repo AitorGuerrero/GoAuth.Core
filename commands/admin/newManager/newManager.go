@@ -1,4 +1,4 @@
-package new
+package newManager
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
@@ -6,7 +6,7 @@ import (
 )
 
 type Command struct {
-	Source manager.ManagerSource
+	Source manager.Source
 	Factory user.Factory
 }
 

@@ -23,6 +23,7 @@ func (c Command) Execute(req Request) (res Response, err error) {
 	tokenCode, err := c.getTokenCodeFromUserIfCorrectLogin(
 		user.Id(req.Id),
 		user.Passkey(req.Passkey),
+		user.Namespace(req.Namespace),
 	)
 	if(nil != err) {
 		return
