@@ -10,7 +10,7 @@ var id = "userIdentifier";
 var passkey = "userPasskey";
 var namespace = "userPasskey";
 
-var managerSource = services.Source();
+var managerSource = services.ManagerSource();
 
 var com = Command{managerSource, services.UserFactory()};
 

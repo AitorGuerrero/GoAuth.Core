@@ -22,15 +22,15 @@ func TestIfUserDoNotOwnTheTokenShouldReturnAnError (t *t.T) {
 	userAId := "userA";
 	userAPasskey := "passA"
 	userBId := "userB"
-	commandNewUser := newUser.Command{services.UserSource(), services.UserFactory()}
-	commandNewUser.Execute(newUser.Request{userAId, userAPasskey})
-	commandNewUser.Execute(newUser.Request{userBId, "passB"})
+	commandNewUser := newUser.Command{services.ManagerSource(), services.UserSource(), services.UserFactory()}
+	commandNewUser.Execute(newUser.Request{userAId, userAPasskey, "namespace"})
+	commandNewUser.Execute(newUser.Request{userBId, "passB", "namespace"})
 
 	loginCommand := login.Command{services.UserLogin(), services.UserSource()}
-	res, _ := loginCommand.Execute(login.Request{userAId, userAPasskey})
+	res, _ := loginCommand.Execute(login.Request{userAId, userAPasskey, "namespace"})
 	userAToken := res.SessionToken
 
-	err := com.Execute(Request{userBId, userAToken})
+	err := com.Execute(Request{userBId, userAToken, "namespace"})
 
 	if (nil == err) {
 		t.Error("Should throw an error")

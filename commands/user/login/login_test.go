@@ -35,7 +35,7 @@ var u = fac.Make(user.Id(id), user.Passkey(passkey))
 
 func TestShouldReturnASessionToken(t * t.T) {
 	source.Add(u)
-	req := Request{id, passkey}
+	req := Request{id, passkey, "namespace"}
 	res, _ := c.Execute(req)
 	if (res.SessionToken == "") {
 		t.Error("Should return a token")

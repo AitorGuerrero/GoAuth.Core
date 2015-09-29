@@ -7,7 +7,7 @@ import (
 
 type Command struct {
 	ManagerSource manager.Source
-	UserSource user.UserSource
+	UserSource user.Source
 	Factory user.Factory
 }
 
@@ -18,13 +18,11 @@ type Request struct {
 }
 
 func (c Command) Execute(r Request) (err error) {
-	m, err := c.ManagerSource.ById(r.ManagerId)
+	m, err := c.ManagerSource.ById(user.Id(r.ManagerId))
 	if nil != err {
 		return
 	}
-	uid := user.Id(r.Id);
-	p := user.Passkey(r.Passkey)
-	u := c.Factory.Make(uid, p)
+	u := c.Factory.Make(user.Id(r.UserId), user.Passkey(r.Passkey))
 	c.UserSource.Add(u)
 	m.AddUser(u)
 	c.ManagerSource.Persist(m)

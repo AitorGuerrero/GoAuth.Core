@@ -12,11 +12,16 @@ type Command struct {
 
 type Request struct {
 	ManagerId string
+	UserId string
 	Namespace string
 }
 
 func (c Command) Execute(r Request) (err error) {
-	m, err := c.ManagerSource.ById(r.ManagerId)
+	m, err := c.ManagerSource.ById(user.Id(r.ManagerId))
+	if nil != err {
+		return
+	}
+	u, err := c.UserSource.Get(user.Id(r.UserId))
 	if nil != err {
 		return
 	}

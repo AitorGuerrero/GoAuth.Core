@@ -11,10 +11,10 @@ var passkey = "userPasskey";
 
 var userSource = services.UserSource();
 
-var com = Command{userSource, services.UserFactory()};
+var com = Command{services.ManagerSource(), userSource, services.UserFactory()};
 
 func TestShouldPersistInASource(t *t.T) {
-	err := com.Execute(Request{id, passkey});
+	err := com.Execute(Request{"managerId", id, passkey});
 	if nil != err {
 		t.Error(err)
 	}

@@ -6,10 +6,10 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
 )
-var userSource = implementationUser.UserSource{make(map[user.Id]user.User)}
-var managerSource = implementationManager.Source{}
+var userSource = implementationUser.Source{map[user.Id]user.User{}}
+var managerSource = implementationManager.Source{map[user.Id]manager.Manager{}}
 
-func UserSource() user.UserSource {
+func UserSource() user.Source {
 	return &userSource
 }
 

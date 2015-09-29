@@ -1,6 +1,6 @@
 package user
 
-type UserSource interface {
+type Source interface {
 	Add (User) error
 	Persist (User) error
 	Get(Id) (User, error)
@@ -33,12 +33,12 @@ func (u User) EncryptedPasskey() cryptedPasskey {
 	return u.passkey
 }
 
-func (u User) GrantAccessTo(n Namespace) {
-	append(u.namespaces, n)
+func (u *User) GrantAccessTo(n Namespace) {
+	u.namespaces = append(u.namespaces, n)
 }
 
 func (u User) hasAccessTo(n Namespace) bool {
-	for ns <= u.namespaces {
+	for _, ns := range u.namespaces {
 		if ns.Owns(n) {
 			return true
 		}

@@ -20,8 +20,8 @@ func (com Command) Execute(req Request) (error) {
 	uid := user.Id(req.Id)
 	p := user.Passkey(req.Passkey)
 	u := com.Factory.Make(uid, p)
-	ns := manager.Namespace(req.Namespace)
-	m := manager.Manager{u, ns}
+	ns := user.Namespace(req.Namespace)
+	m := manager.Manager{u, ns, map[user.Id]user.User{}}
 	com.Source.Add(m)
 
 	return nil;

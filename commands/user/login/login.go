@@ -6,7 +6,7 @@ import (
 
 type Command struct {
 	Login user.Login
-	UserSource user.UserSource
+	UserSource user.Source
 }
 
 type Request struct {

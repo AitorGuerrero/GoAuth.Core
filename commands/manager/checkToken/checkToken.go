@@ -5,7 +5,7 @@ import (
 )
 type Command struct {
 	TokenChecker user.TokenChecker
-	UserSource user.UserSource
+	UserSource user.Source
 }
 
 type Request struct {

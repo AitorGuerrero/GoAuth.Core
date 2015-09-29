@@ -4,7 +4,7 @@ import "errors"
 
 type Login struct {
 	Validator SignInValidator
-	UserSource UserSource
+	UserSource Source
 }
 
 func (l Login) Try(uid Id, p Passkey, n Namespace) (uo User, err error) {

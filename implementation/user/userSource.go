@@ -5,11 +5,11 @@ import (
 	"errors"
 )
 
-type UserSource struct {
+type Source struct {
 	Collection map[user.Id]user.User
 }
 
-func (us *UserSource) Add (u user.User) error {
+func (us *Source) Add (u user.User) error {
 	if us.Collection[u.Id()].Id() == u.Id() {
 		return errors.New("Existing user")
 	}
@@ -18,7 +18,7 @@ func (us *UserSource) Add (u user.User) error {
 	return nil
 }
 
-func (us *UserSource) Get (i user.Id) (user.User, error) {
+func (us *Source) Get (i user.Id) (user.User, error) {
 	u := us.Collection[i]
 	if u.Id() != i {
 		return u, errors.New("Invalid User id")
@@ -27,7 +27,7 @@ func (us *UserSource) Get (i user.Id) (user.User, error) {
 	return u, nil
 }
 
-func (us *UserSource) Persist (u user.User) error {
+func (us *Source) Persist (u user.User) error {
 	us.Collection[u.Id()] = u
 
 	return nil
