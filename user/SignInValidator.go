@@ -9,7 +9,7 @@ type SignInValidator struct {
 }
 
 func (suv SignInValidator) Validate(u User, p string) error {
-	if suv.Encryptor.Encrypt(u.Id(), p) != u.EncryptedPasskey() {
+	if suv.Encryptor.Encrypt(u.Id(), p) != u.Passkey() {
 		return errors.New("The passkey doesn't match")
 	}
 
