@@ -7,27 +7,26 @@ import (
 )
 
 type Source interface {
-	Add(Manager) error
-	Get (i user.Id) (Manager, error)
-	Persist(Manager) error
+	Add(*Manager) error
+	Get (i user.Id) (*Manager, error)
 }
 
 type Manager struct {
 	user.User
 	Namespace user.Namespace
-	Users map[string]user.User
+	Users map[string]*user.User
 }
 
-func (m *Manager) AddUser(u user.User) {
+func (m *Manager) AddUser(u *user.User) {
 	m.Users[string(u.Id())] = u
 }
 
-func (m Manager) GrantAccessToUser(u user.User, n user.Namespace) (err error) {
+func (m Manager) GrantAccessToUser(u *user.User, n user.Namespace) (err error) {
 	if false == m.ownsNamespace(n) {
 		err = errors.New("Manager do not own this namespace")
 		return
 	}
-	if false == m.ownsUser(u) {
+	if false == m.ownsUser(*u) {
 		err = errors.New("Manager do not own this user")
 		return
 	}

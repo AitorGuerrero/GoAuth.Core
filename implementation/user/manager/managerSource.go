@@ -8,31 +8,25 @@ import (
 )
 
 type Source struct {
-	Collection map[string]manager.Manager
+	Collection map[string]*manager.Manager
 }
 
-func (s *Source) Add (m manager.Manager) (err error) {
-	if s.Collection[string(m.Id())].Id().Equal(m.Id()) {
+func (s *Source) Add (m *manager.Manager) (err error) {
+	if s.Collection[string(m.Id())] != nil {
 		err = errors.New("Existing user")
 		return
 	}
-	s.Persist(m)
+	s.Collection[string(m.Id())] = m
 
 	return
 }
 
-func (ms Source) Get (i user.Id) (manager.Manager, error) {
+func (ms Source) Get (i user.Id) (*manager.Manager, error) {
 	for _, m := range ms.Collection {
 		if m.Id().Equal(i) {
 			return m, nil
 		}
 	}
 
-	return manager.Manager{}, errors.New("Not found user")
-}
-
-func (s *Source) Persist (m manager.Manager) error {
-	s.Collection[string(m.Id())] = m
-
-	return nil
+	return &manager.Manager{}, errors.New("Not found user")
 }

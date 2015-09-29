@@ -29,10 +29,10 @@ func (com Command) Execute(req Request) (err error) {
 	m := manager.Manager{
 		com.UserFactory.Make(id, req.Passkey),
 		user.Namespace(req.Namespace),
-		map[string]user.User{},
+		map[string]*user.User{},
 	}
 	m.GenerateToken()
-	com.Source.Add(m)
+	err = com.Source.Add(&m)
 
-	return nil;
+	return err;
 }

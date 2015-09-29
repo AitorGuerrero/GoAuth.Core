@@ -30,14 +30,10 @@ func TestIfPasskeyIsBlankShouldReturnAError(t *t.T) {
 }
 
 func TestShouldAddInASource(t *t.T) {
-	err := com.Execute(Request{id, passkey, namespace})
-	if nil != err {
-		t.Error(err)
-		return
-	}
+	com.Execute(Request{id, passkey, namespace})
 	manager, err := managerSource.Get(uuidId)
 	if nil != err {
-		t.Error(err, uuidId)
+		t.Error(err, uuidId, managerSource)
 		return
 	}
 	if !manager.Id().Equal(uuidId) {

@@ -7,14 +7,13 @@ type Login struct {
 	UserSource Source
 }
 
-func (l Login) Try(uid Id, p string, n Namespace) (uo User, err error) {
-
+func (l Login) Try(uid Id, p string, n Namespace) (uo *User, err error) {
 	// Demo of functional programming
-	err = l.getUser(uid, func(u User) {
+	err = l.getUser(uid, func(u *User) {
 		uo = u
-		err = l.ifHasAccessToNamespace(uo, n, func() {
-			err = l.ifValidates(uo, p, func() {
-				l.ifHasNotToken(uo, func() {
+		err = l.ifHasAccessToNamespace(*uo, n, func() {
+			err = l.ifValidates(*uo, p, func() {
+				l.ifHasNotToken(*uo, func() {
 					uo.GenerateToken()
 				})
 			})
@@ -39,7 +38,7 @@ func (l Login) ifValidates(u User, p string, fn func()) (err error) {
 	return
 }
 
-func (l Login) getUser(uid Id, fn func(u User)) (err error) {
+func (l Login) getUser(uid Id, fn func(u *User)) (err error) {
 	u, err := l.UserSource.Get(uid)
 	if(nil == err) {
 		fn(u)

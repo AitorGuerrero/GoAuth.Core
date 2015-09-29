@@ -43,12 +43,11 @@ func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up string, n us
 	return
 }
 
-func (c Command) getUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (u user.User, err error) {
+func (c Command) getUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (u *user.User, err error) {
 	u, err = c.Login.Try(uid, up, n)
 	if(nil != err) {
 		return
 	}
-	err = c.UserSource.Persist(u)
 
 	return
 }

@@ -8,9 +8,8 @@ import (
 type Id uuid.UUID
 type Passkey string
 type Source interface {
-	Add (User) error
-	Persist (User) error
-	Get(Id) (User, error)
+	Add (*User) error
+	Get(Id) (*User, error)
 }
 
 type User struct {

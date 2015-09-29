@@ -6,8 +6,8 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
 )
-var userSource = implementationUser.Source{map[string]user.User{}}
-var managerSource = implementationManager.Source{map[string]manager.Manager{}}
+var userSource = implementationUser.Source{map[string]*user.User{}}
+var managerSource = implementationManager.Source{map[string]*manager.Manager{}}
 
 func UserSource() user.Source {
 	return &userSource

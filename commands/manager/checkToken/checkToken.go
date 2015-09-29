@@ -21,5 +21,5 @@ func (c Command) Execute(req Request) (error) {
 	}
 	t := user.Token{user.TokenCode(req.Token)}
 	n := user.Namespace(req.Namespace)
-	return c.TokenChecker.Check(u, t, n)
+	return c.TokenChecker.Check(*u, t, n)
 }
