@@ -18,27 +18,27 @@ var managerPasskey = "managerPasskey"
 var namespace = "/test/passkey"
 var com Command
 var req Request
-var managerSource managerImplementation.Source
-var userSource userImplementation.Source
+var managerSource *managerImplementation.Source
+var userSource *userImplementation.Source
 var factory = user.Factory{user.PasskeyEncryptor{userImplementation.Encryptor{}}}
-var m manager.Manager
+var m *manager.Manager
 
 
 func beforeEach() {{}
-	managerSource = managerImplementation.Source{map[string]*manager.Manager{}}
-	userSource = userImplementation.Source{map[string]*user.User{}}
-	com = Command{&managerSource, &userSource, factory}
+	managerSource = &managerImplementation.Source{map[string]*manager.Manager{}}
+	userSource = &userImplementation.Source{map[string]*user.User{}}
+	com = Command{managerSource, userSource, factory}
 	req = Request{managerId, userId, passKey}
 	m = createManager()
 }
 
-func createManager() (m manager.Manager) {
-	m = manager.Manager{
+func createManager() (m *manager.Manager) {
+	m = &manager.Manager{
 		factory.Make(parsedManagerId, managerPasskey),
 		user.Namespace(namespace),
 		map[string]*user.User{},
 	}
-	managerSource.Add(&m)
+	managerSource.Add(m)
 
 	return
 }
@@ -48,6 +48,15 @@ func TestIfManagerDoesNotExistsShouldReturnError (t *t.T) {
 	req.ManagerId = "2244d379-c4f3-4ba1-9ffe-d4e57b52377a"
 	err := com.Execute(req)
 	if _, ok := err.(ManagerDoesNotExistError); !ok {
+		t.Error(err)
+	}
+}
+
+func TestIUserIdIsMalformedShouldReturnError (t *t.T) {
+	beforeEach()
+	req.UserId = "malformedUserId"
+	err := com.Execute(req)
+	if _, ok := err.(MalformedUserIdError); !ok {
 		t.Error(err)
 	}
 }
