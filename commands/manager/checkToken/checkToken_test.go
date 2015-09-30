@@ -14,6 +14,7 @@ var userFactory user.Factory
 var com Command
 var req Request
 var parsedId user.Id
+var u user.User
 var passkeyEncryptor = user.PasskeyEncryptor{userImplementation.Encryptor{}}
 var tokenChecker = user.TokenChecker{}
 
@@ -21,13 +22,14 @@ func beforeEach() {
 	parsedId, _ = user.ParseId(id)
 	userSource = userImplementation.Source{map[string]*user.User{}}
 	userFactory = user.Factory{passkeyEncryptor}
+	u = createUser()
 	com = Command{tokenChecker, &userSource}
-	req = Request{}
+	req = Request{id, string(u.Token().Code), testNameSpace}
 }
 
 func TestIfTheUserDoesNotExistsShouldReturnAnError (t *t.T) {
 	beforeEach()
-	req.Token = "PisToken"
+	req.UserId = "bbc99515-779c-471a-a43b-350184dc2569"
 	err := com.Execute(req)
 	if _, ok := err.(InvalidIdError); !ok {
 		t.Error(err)
@@ -36,9 +38,7 @@ func TestIfTheUserDoesNotExistsShouldReturnAnError (t *t.T) {
 
 func TestIfTheTokenIsInvalidShouldReturnAnError (t *t.T) {
 	beforeEach()
-	createUser()
 	req.Token = "FakeToken"
-	req.UserId = id
 	err := com.Execute(req)
 	if _, ok := err.(IncorrectTokenError); !ok {
 		t.Error(err)
@@ -47,9 +47,6 @@ func TestIfTheTokenIsInvalidShouldReturnAnError (t *t.T) {
 
 func TestIfTheUserHasNotAccessToNamespaceShouldReturnError (t *t.T) {
 	beforeEach()
-	u := createUser()
-	req.Token = string(u.Token().Code)
-	req.UserId = id
 	req.Namespace = "/fake/Namespace"
 	err := com.Execute(req)
 	if _, ok := err.(AccessErrorToNamespace); !ok {
@@ -59,10 +56,6 @@ func TestIfTheUserHasNotAccessToNamespaceShouldReturnError (t *t.T) {
 
 func TestIfTokenIsCorrectShouldNotResturnError(t *t.T) {
 	beforeEach()
-	u := createUser()
-	req.Token = string(u.Token().Code)
-	req.UserId = id
-	req.Namespace = testNameSpace
 	err := com.Execute(req)
 	if nil != err {
 		t.Error(err)
