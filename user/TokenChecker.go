@@ -8,10 +8,18 @@ func (IncorrectTokenError) Error () string {
 	return "There is no user with that ID"
 }
 
-func (tc TokenChecker) Check(u User, t Token, n Namespace) (err error) {
-	if !u.HasToken() || !u.token.IsSame(t) || !u.hasAccessTo(n) {
-		err = IncorrectTokenError{}
+type AccessErrorToNamespace struct {}
+func (AccessErrorToNamespace) Error() string {
+	return "User do not have access to that namespace"
+}
+
+func (tc TokenChecker) Check(u User, t Token, n Namespace) (error) {
+	if !u.HasToken() || !u.token.IsSame(t) {
+		return IncorrectTokenError{}
+	}
+	if !u.hasAccessTo(n) {
+		return AccessErrorToNamespace{}
 	}
 
-	return err
+	return nil
 }

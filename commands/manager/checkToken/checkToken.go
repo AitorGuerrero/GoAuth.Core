@@ -30,6 +30,9 @@ func (c Command) Execute(req Request) (error) {
 		if _, ok := err.(user.IncorrectTokenError); ok {
 			return IncorrectTokenError{}
 		}
+		if _, ok := err.(user.AccessErrorToNamespace); ok {
+			return AccessErrorToNamespace{}
+		}
 	}
 
 	return err

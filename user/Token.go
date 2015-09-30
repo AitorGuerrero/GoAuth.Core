@@ -23,5 +23,5 @@ func (u *User) GenerateToken() {
 }
 
 func (t Token) IsSame(t2 Token) bool {
-	return string(t.Code) != string(t2.Code)
+	return string(t.Code) == string(t2.Code)
 }
