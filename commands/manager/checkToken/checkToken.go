@@ -15,11 +15,22 @@ type Request struct {
 }
 
 func (c Command) Execute(req Request) (error) {
-	u, err := c.UserSource.Get(user.Id(req.UserId))
-	if (nil != err) {
+	var pid user.Id
+	var u *user.User
+	var err error
+
+	if pid, err = user.ParseId(req.UserId); nil != err {
 		return InvalidIdError{}
 	}
-	t := user.Token{user.TokenCode(req.Token)}
+	if u, err = c.UserSource.Get(pid); nil != err {
+		return InvalidIdError{}
+	}
 	n := user.Namespace(req.Namespace)
-	return c.TokenChecker.Check(*u, t, n)
+	if err = c.TokenChecker.Check(*u, user.Token{user.TokenCode(req.Token)}, n,); nil != err {
+		if _, ok := err.(user.IncorrectTokenError); ok {
+			return IncorrectTokenError{}
+		}
+	}
+
+	return err
 }

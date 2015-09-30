@@ -10,7 +10,7 @@ type Source struct {
 }
 
 func (s *Source) Add (u *user.User) error {
-	if s.Collection[string(u.Id())].Id().Equal(u.Id()) {
+	if s.Collection[string(u.Id())] != nil {
 		return errors.New("Existing user")
 	}
 	s.Collection[string(u.Id())] = u

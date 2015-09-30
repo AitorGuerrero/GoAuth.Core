@@ -14,7 +14,6 @@ type Source struct {
 func (s *Source) Add (m *manager.Manager) error {
 	if s.ExistsWithNamespace(m.Namespace) {
 		return manager.ExistentNamespaceError{}
-
 	}
 	if s.Collection[string(m.Id())] != nil {
 		return manager.DuplicatedIdError{}
