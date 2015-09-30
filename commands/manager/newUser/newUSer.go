@@ -20,7 +20,7 @@ type Request struct {
 func (c Command) Execute(r Request) (err error) {
 	m, err := c.ManagerSource.Get(user.Id(r.ManagerId))
 	if nil != err {
-		return
+		return ManagerDoesNotExistError{}
 	}
 	u := c.Factory.Make(user.Id(r.UserId), r.Passkey)
 	c.UserSource.Add(&u)
