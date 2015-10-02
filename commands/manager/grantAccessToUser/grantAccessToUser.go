@@ -17,13 +17,21 @@ type Request struct {
 }
 
 func (c Command) Execute(r Request) (err error) {
-	m, err := c.ManagerSource.Get(user.Id(r.ManagerId))
+	mi, err := user.ParseId(r.ManagerId)
+	if (nil != err) {
+		return
+	}
+	m, err := c.ManagerSource.Get(mi)
 	if nil != err {
 		return
 	}
-	u, err := c.UserSource.Get(user.Id(r.UserId))
-	if nil != err {
+	ui, err := user.ParseId(r.UserId)
+	if (nil != err) {
 		return
+	}
+	u, err := c.UserSource.Get(ui)
+	if _, ok := err.(user.NotExistentUser); ok {
+		return UserDoesNotExist{string(ui), err}
 	}
 	m.GrantAccessToUser(u, user.Namespace(r.Namespace))
 

@@ -2,7 +2,6 @@ package user
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	"errors"
 )
 
 type Source struct {
@@ -21,7 +20,7 @@ func (s *Source) Add (u *user.User) error {
 func (us Source) Get (i user.Id) (u *user.User, err error) {
 	u = us.Collection[string(i)]
 	if u == nil {
-		err = errors.New("Invalid User id")
+		err = user.NotExistentUser{i}
 	}
 
 	return u, err
