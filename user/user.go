@@ -2,6 +2,13 @@ package user
 
 type Passkey string
 
+type DuplicatedIdError struct {
+	Id Id
+}
+func (DuplicatedIdError) Error() string {
+	return "The id is in use"
+}
+
 type Source interface {
 	Add (*User) error
 	Get(Id) (*User, error)

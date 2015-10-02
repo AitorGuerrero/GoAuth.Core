@@ -11,7 +11,7 @@ type Source struct {
 
 func (s *Source) Add (u *user.User) error {
 	if s.Collection[string(u.Id())] != nil {
-		return errors.New("Existing user")
+		return user.DuplicatedIdError{u.Id()}
 	}
 	s.Collection[string(u.Id())] = u
 

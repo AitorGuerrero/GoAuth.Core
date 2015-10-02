@@ -22,13 +22,16 @@ func (c Command) Execute(r Request) (err error) {
 	var uid user.Id
 	mi, _ := user.ParseId(r.ManagerId)
 	if m, err = c.ManagerSource.Get(mi); nil != err {
-		return ManagerDoesNotExistError{}
+		return ManagerDoesNotExistError{err}
 	}
 	if uid, err = user.ParseId(r.UserId); nil != err {
-		return MalformedUserIdError{}
+		return MalformedUserIdError{err}
 	}
 	u := c.Factory.Make(uid, r.Passkey)
-	c.UserSource.Add(&u)
+	err = c.UserSource.Add(&u)
+	if _, ok := err.(user.DuplicatedIdError); ok  {
+		return DuplicatedIdError{err}
+	}
 	m.AddUser(&u)
 
 	return nil;

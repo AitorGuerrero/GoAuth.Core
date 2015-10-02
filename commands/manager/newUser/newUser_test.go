@@ -13,6 +13,7 @@ import(
 var managerId = "dabfe523-fae0-4a1c-8923-5e51ffeb3e91"
 var parsedManagerId, _ = user.ParseId(managerId)
 var userId = "bbc99515-779c-471a-a43b-350184dc2569"
+var parsedUserId, _ = user.ParseId(userId)
 var passKey = "userPasskey"
 var managerPasskey = "managerPasskey"
 var namespace = "/test/passkey"
@@ -57,6 +58,16 @@ func TestIUserIdIsMalformedShouldReturnError (t *t.T) {
 	req.UserId = "malformedUserId"
 	err := com.Execute(req)
 	if _, ok := err.(MalformedUserIdError); !ok {
+		t.Error(err)
+	}
+}
+
+func TestIUserIdExistsShouldReturnError (t *t.T) {
+	beforeEach()
+	u := factory.Make(parsedUserId, "anotherPasskey")
+	userSource.Add(&u)
+	err := com.Execute(req)
+	if _, ok := err.(DuplicatedIdError); !ok {
 		t.Error(err)
 	}
 }
