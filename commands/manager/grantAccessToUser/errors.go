@@ -15,3 +15,12 @@ type ManagerDoesNotExist struct {
 func (ManagerDoesNotExist) Error() string {
 	return "Manager With that Id des not exists"
 }
+
+type ManagerDoesNotOwnTheUser struct {
+	UserId string
+	ManagerId string
+	OrigError error
+}
+func (e ManagerDoesNotOwnTheUser) Error() string {
+	return "Manager "+e.ManagerId+" does not own the user "+e.UserId
+}

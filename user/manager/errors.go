@@ -18,3 +18,11 @@ type NotExistsError struct {
 func (NotExistsError) Error () string {
 	return "A manager with that ID does not exists"
 }
+
+type DoesNotOwnTheUser struct {
+	Manager *Manager
+	User *user.User
+}
+func (DoesNotOwnTheUser) Error () string {
+	return "The manager does not own the user"
+}

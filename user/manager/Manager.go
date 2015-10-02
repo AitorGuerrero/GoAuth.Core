@@ -24,11 +24,11 @@ func (m *Manager) AddUser(u *user.User) {
 
 func (m Manager) GrantAccessToUser(u *user.User, n user.Namespace) (err error) {
 	if false == m.ownsNamespace(n) {
-		err = errors.New("Manager do not own this namespace")
+		err = errors.New("Do not owns teh namespace")
 		return
 	}
 	if false == m.ownsUser(*u) {
-		err = errors.New("Manager do not own this user")
+		err = DoesNotOwnTheUser{&m, u}
 		return
 	}
 	u.GrantAccessTo(n)
@@ -41,5 +41,5 @@ func (m Manager) ownsNamespace(n user.Namespace) bool {
 }
 
 func (m Manager) ownsUser(u user.User) bool {
-	return false == u.Id().IsEmpty() && m.Users[string(u.Id())].Id().Equal(u.Id())
+	return false == u.Id().IsEmpty() && m.Users[string(u.Id())] != nil
 }

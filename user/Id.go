@@ -27,3 +27,7 @@ func ParseId (s string) (i Id, err error) {
 
 	return
 }
+
+func (i Id) Serialize () string {
+	return uuid.UUID(i).String()
+}

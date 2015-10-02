@@ -66,3 +66,15 @@ func TestWhenManagerDoesNotExistsShouldReturnAnError (t *t.T) {
 		t.Error(err)
 	}
 }
+
+func TestWhenUserDoesNotBelongToManagerShouldReturnAnError (t *t.T) {
+	beforeEach()
+	id, _ := user.ParseId("8ce1fe62-84a8-44bb-9beb-217a91ea0127")
+	anotherUser := factory.Make(id, "passkey")
+	userSource.Add(&anotherUser)
+	req.UserId = anotherUser.Id().Serialize()
+	err := com.Execute(req)
+	if _, ok := err.(ManagerDoesNotOwnTheUser); !ok {
+		t.Error(err)
+	}
+}

@@ -33,7 +33,10 @@ func (c Command) Execute(r Request) (err error) {
 	if _, ok := err.(user.NotExistentUser); ok {
 		return UserDoesNotExist{string(ui), err}
 	}
-	m.GrantAccessToUser(u, user.Namespace(r.Namespace))
+	err = m.GrantAccessToUser(u, user.Namespace(r.Namespace))
+	if _, ok := err.(manager.DoesNotOwnTheUser); ok {
+		return ManagerDoesNotOwnTheUser{req.UserId, req.ManagerId, err}
+	}
 
 	return
 }
