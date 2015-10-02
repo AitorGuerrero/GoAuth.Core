@@ -3,8 +3,6 @@ package manager
 import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
-
-	"errors"
 )
 
 type Source struct {
@@ -23,14 +21,13 @@ func (s *Source) Add (m *manager.Manager) error {
 	return nil
 }
 
-func (ms Source) Get (i user.Id) (*manager.Manager, error) {
-	for _, m := range ms.Collection {
-		if m.Id().Equal(i) {
-			return m, nil
-		}
+func (s Source) Get (i user.Id) (m *manager.Manager, err error) {
+	m = s.Collection[string(i)]
+	if m == nil {
+		err = manager.NotExistsError{i}
 	}
 
-	return &manager.Manager{}, errors.New("Not found manager")
+	return m, err
 }
 
 func (ms Source) ExistsWithNamespace(n user.Namespace) bool {

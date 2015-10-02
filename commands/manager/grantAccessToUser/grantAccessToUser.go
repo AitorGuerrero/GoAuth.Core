@@ -22,8 +22,8 @@ func (c Command) Execute(r Request) (err error) {
 		return
 	}
 	m, err := c.ManagerSource.Get(mi)
-	if nil != err {
-		return
+	if _, ok := err.(manager.NotExistsError); ok {
+		return ManagerDoesNotExist{req.ManagerId, err}
 	}
 	ui, err := user.ParseId(r.UserId)
 	if (nil != err) {
