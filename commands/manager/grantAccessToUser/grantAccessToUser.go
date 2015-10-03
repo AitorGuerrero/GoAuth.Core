@@ -23,7 +23,7 @@ func (c Command) Execute(r Request) (err error) {
 	}
 	m, err := c.ManagerSource.Get(mi)
 	if _, ok := err.(manager.NotExistsError); ok {
-		return ManagerDoesNotExist{req.ManagerId, err}
+		return ManagerDoesNotExist{err, req.ManagerId}
 	}
 	ui, err := user.ParseId(r.UserId)
 	if (nil != err) {
@@ -31,14 +31,14 @@ func (c Command) Execute(r Request) (err error) {
 	}
 	u, err := c.UserSource.Get(ui)
 	if _, ok := err.(user.NotExistentUser); ok {
-		return UserDoesNotExist{string(ui), err}
+		return UserDoesNotExist{err, string(ui)}
 	}
 	err = m.GrantAccessToUser(u, user.Namespace(r.Namespace))
 	if _, ok := err.(manager.DoesNotOwnTheUser); ok {
-		return ManagerDoesNotOwnTheUser{req.UserId, req.ManagerId, err}
+		return ManagerDoesNotOwnTheUser{err, req.UserId, req.ManagerId}
 	}
 	if _, ok := err.(manager.ManagerDoesNotOwnTheNamespace); ok {
-		return ManagerDoesNotOwnTheNamespace{err}
+		return ManagerDoesNotOwnTheNamespace{err, req.ManagerId, req.Namespace}
 	}
 
 	return

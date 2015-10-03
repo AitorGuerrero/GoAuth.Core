@@ -1,33 +1,37 @@
 package grantAccessToUser
 
+type DomainError error
+
 type UserDoesNotExist struct {
+	DomainError
 	Id string
-	OrigError error
 }
-func(UserDoesNotExist) Error() string {
-	return "User With that Id des not exists"
+func(e UserDoesNotExist) Error() string {
+	return "User with Id \""+e.Id+"\" des not exists"
 }
 
 type ManagerDoesNotExist struct {
+	DomainError
 	Id string
-	OrigError error
 }
-func (ManagerDoesNotExist) Error() string {
-	return "Manager With that Id des not exists"
+func (e ManagerDoesNotExist) Error() string {
+	return "Manager with Id "+e.Id+" does not exists"
 }
 
 type ManagerDoesNotOwnTheUser struct {
+	DomainError
 	UserId string
 	ManagerId string
-	OrigError error
 }
 func (e ManagerDoesNotOwnTheUser) Error() string {
-	return "Manager "+e.ManagerId+" does not own the user "+e.UserId
+	return "Manager \""+e.ManagerId+"\" does not own the user \""+e.UserId+"\""
 }
 
 type ManagerDoesNotOwnTheNamespace struct {
-	OrigErr error
+	DomainError
+	ManagerId string
+	Namespace string
 }
-func (ManagerDoesNotOwnTheNamespace) Error() string {
-	return "Manager does not own the namespace"
+func (e ManagerDoesNotOwnTheNamespace) Error() string {
+	return "Manager \""+e.ManagerId+"\" does not own the namespace \""+e.Namespace+"\""
 }
