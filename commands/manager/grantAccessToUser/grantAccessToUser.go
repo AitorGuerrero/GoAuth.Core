@@ -37,6 +37,9 @@ func (c Command) Execute(r Request) (err error) {
 	if _, ok := err.(manager.DoesNotOwnTheUser); ok {
 		return ManagerDoesNotOwnTheUser{req.UserId, req.ManagerId, err}
 	}
+	if _, ok := err.(manager.ManagerDoesNotOwnTheNamespace); ok {
+		return ManagerDoesNotOwnTheNamespace{err}
+	}
 
 	return
 }

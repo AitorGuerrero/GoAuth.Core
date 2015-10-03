@@ -2,8 +2,6 @@ package manager
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-
-	"errors"
 )
 
 type Source interface {
@@ -24,7 +22,7 @@ func (m *Manager) AddUser(u *user.User) {
 
 func (m Manager) GrantAccessToUser(u *user.User, n user.Namespace) (err error) {
 	if false == m.ownsNamespace(n) {
-		err = errors.New("Do not owns teh namespace")
+		err = ManagerDoesNotOwnTheNamespace{m, n}
 		return
 	}
 	if false == m.ownsUser(*u) {

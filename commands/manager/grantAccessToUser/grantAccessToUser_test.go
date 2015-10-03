@@ -13,8 +13,8 @@ var managerId = "dabfe523-fae0-4a1c-8923-5e51ffeb3e91"
 var parsedManagerId, _ = user.ParseId(managerId)
 var userId = "bbc99515-779c-471a-a43b-350184dc2569"
 var parsedUserId, _ = user.ParseId(userId)
-var namespace = "/test/passkey"
-var managerNamespace = "/test"
+var namespace = "test/passkey"
+var managerNamespace = "test"
 var managerSource *managerImplementation.Source
 var userSource *userImplementation.Source
 var factory = user.Factory{user.PasskeyEncryptor{userImplementation.Encryptor{}}}
@@ -75,6 +75,15 @@ func TestWhenUserDoesNotBelongToManagerShouldReturnAnError (t *t.T) {
 	req.UserId = anotherUser.Id().Serialize()
 	err := com.Execute(req)
 	if _, ok := err.(ManagerDoesNotOwnTheUser); !ok {
+		t.Error(err)
+	}
+}
+
+func TestManagerDowNotOwnTheNamespaceShouldReturnAnError (t *t.T) {
+	beforeEach()
+	req.Namespace = "Bad/namespace"
+	err := com.Execute(req)
+	if _, ok := err.(ManagerDoesNotOwnTheNamespace); !ok {
 		t.Error(err)
 	}
 }

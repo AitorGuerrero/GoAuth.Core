@@ -24,3 +24,10 @@ type ManagerDoesNotOwnTheUser struct {
 func (e ManagerDoesNotOwnTheUser) Error() string {
 	return "Manager "+e.ManagerId+" does not own the user "+e.UserId
 }
+
+type ManagerDoesNotOwnTheNamespace struct {
+	OrigErr error
+}
+func (ManagerDoesNotOwnTheNamespace) Error() string {
+	return "Manager does not own the namespace"
+}
