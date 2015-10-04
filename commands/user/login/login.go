@@ -2,7 +2,6 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	"fmt"
 )
 
 type Command struct {
@@ -21,11 +20,12 @@ type Response struct {
 }
 
 func (c Command) Execute(req Request) (res Response, err error) {
-	token, err := c.getTokenFromUserIfCorrectLogin(
+	u, err := c.Login.Try(
 		user.ParseId(req.Id),
 		req.Passkey,
 		user.Namespace(req.Namespace),
 	)
+
 	if _, ok := err.(user.NotExistentUser); ok {
 		return res, UserDoesNotExist{err, req.Id}
 	}
@@ -35,31 +35,10 @@ func (c Command) Execute(req Request) (res Response, err error) {
 	if _, ok := err.(user.IncorrectNamespaceError); ok {
 		return res, IncorrectNamespaceError{err}
 	}
-
 	if(nil != err) {
 		return
 	}
-	res.SessionToken = token.Serialize()
-
-	return
-}
-
-func (c Command) getTokenFromUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (tc user.Token, err error) {
-	u, err := c.getUserIfCorrectLogin(uid, up, n)
-	if nil != err {
-		return
-	}
- 	tc = u.Token
-
-	return
-}
-
-func (c Command) getUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (u *user.User, err error) {
-	u, err = c.Login.Try(uid, up, n)
-	fmt.Print("AA", err, "\n")
-	if(nil != err) {
-		return
-	}
+	res.SessionToken = u.Token.Serialize()
 
 	return
 }
