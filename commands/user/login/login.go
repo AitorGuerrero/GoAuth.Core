@@ -20,7 +20,7 @@ type Response struct {
 }
 
 func (c Command) Execute(req Request) (res Response, err error) {
-	tokenCode, err := c.getTokenCodeFromUserIfCorrectLogin(
+	token, err := c.getTokenFromUserIfCorrectLogin(
 		user.Id(req.Id),
 		req.Passkey,
 		user.Namespace(req.Namespace),
@@ -28,17 +28,17 @@ func (c Command) Execute(req Request) (res Response, err error) {
 	if(nil != err) {
 		return
 	}
-	res.SessionToken = string(tokenCode)
+	res.SessionToken = token.Serialize()
 
 	return
 }
 
-func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (tc user.TokenCode, err error) {
+func (c Command) getTokenFromUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (tc user.Token, err error) {
 	u, err := c.getUserIfCorrectLogin(uid, up, n)
 	if nil != err {
 		return
 	}
- 	tc = u.Token.Code
+ 	tc = u.Token
 
 	return
 }

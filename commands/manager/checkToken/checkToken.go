@@ -26,7 +26,7 @@ func (c Command) Execute(req Request) (error) {
 		return InvalidIdError{}
 	}
 	n := user.Namespace(req.Namespace)
-	if err = c.TokenChecker.Check(*u, user.Token{user.TokenCode(req.Token)}, n,); nil != err {
+	if err = c.TokenChecker.Check(*u, user.ParseToken(req.Token), n,); nil != err {
 		if _, ok := err.(user.IncorrectTokenError); ok {
 			return IncorrectTokenError{}
 		}
