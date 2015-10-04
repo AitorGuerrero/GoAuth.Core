@@ -2,26 +2,20 @@ package user
 
 import (
 	"code.google.com/p/go-uuid/uuid"
-	"errors"
 )
 
 type Id uuid.UUID
 
 func (i Id) Equal (i2 Id) bool {
-	return string(i) == string(i2)
+	return uuid.Equal(uuid.UUID(i), uuid.UUID(i2))
 }
 
 func (i Id) IsEmpty () bool {
-	return "" == string(i)
+	return i.Serialize() == ""
 }
 
-func ParseId (s string) (i Id, err error) {
-	i = Id(uuid.Parse(s));
-	if nil == i {
-		err = errors.New("Invalid Id")
-	}
-
-	return
+func ParseId (s string) (i Id) {
+	return Id(uuid.Parse(s))
 }
 
 func (i Id) Serialize () string {

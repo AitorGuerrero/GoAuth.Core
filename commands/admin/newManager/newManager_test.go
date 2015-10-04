@@ -7,7 +7,7 @@ import (
 )
 
 var id = "dabfe523-fae0-4a1c-8923-5e51ffeb3e91"
-var uuidId, _ = user.ParseId(id)
+var uuidId = user.ParseId(id)
 var passkey = "userPasskey"
 var namespace = "userPasskey"
 

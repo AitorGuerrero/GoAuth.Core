@@ -17,17 +17,12 @@ type Request struct {
 }
 
 func (c Command) Execute(r Request) (err error) {
-	mi, err := user.ParseId(r.ManagerId)
-	if (nil != err) {
-		return
-	}
+	var mi, ui user.Id
+	mi = user.ParseId(r.ManagerId);
+	ui = user.ParseId(r.UserId);
 	m, err := c.ManagerSource.Get(mi)
 	if _, ok := err.(manager.NotExistsError); ok {
 		return ManagerDoesNotExist{err, req.ManagerId}
-	}
-	ui, err := user.ParseId(r.UserId)
-	if (nil != err) {
-		return
 	}
 	u, err := c.UserSource.Get(ui)
 	if _, ok := err.(user.NotExistentUser); ok {

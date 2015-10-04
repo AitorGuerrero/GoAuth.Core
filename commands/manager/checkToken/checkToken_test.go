@@ -13,13 +13,12 @@ var userSource userImplementation.Source
 var userFactory user.Factory
 var com Command
 var req Request
-var parsedId user.Id
+var parsedId = user.ParseId(id)
 var u user.User
 var passkeyEncryptor = user.PasskeyEncryptor{userImplementation.Encryptor{}}
 var tokenChecker = user.TokenChecker{}
 
 func beforeEach() {
-	parsedId, _ = user.ParseId(id)
 	userSource = userImplementation.Source{map[string]*user.User{}}
 	userFactory = user.Factory{passkeyEncryptor}
 	u = createUser()

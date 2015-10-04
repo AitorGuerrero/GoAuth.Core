@@ -18,8 +18,8 @@ type Request struct {
 }
 
 func (com Command) Execute(req Request) (err error) {
-	id, err := user.ParseId(req.Id);
-	if nil != err {
+	var id user.Id
+	if id = user.ParseId(req.Id); id == nil {
 		err = IncorrectIdError{}
 		return
 	}

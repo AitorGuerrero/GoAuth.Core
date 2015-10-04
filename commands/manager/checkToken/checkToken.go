@@ -19,7 +19,7 @@ func (c Command) Execute(req Request) (error) {
 	var u *user.User
 	var err error
 
-	if pid, err = user.ParseId(req.UserId); nil != err {
+	if pid = user.ParseId(req.UserId); nil == pid {
 		return InvalidIdError{}
 	}
 	if u, err = c.UserSource.Get(pid); nil != err {

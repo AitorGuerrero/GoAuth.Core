@@ -20,12 +20,11 @@ type Request struct {
 func (c Command) Execute(r Request) (err error) {
 	var m *manager.Manager
 	var uid user.Id
-	mi, _ := user.ParseId(r.ManagerId)
-	if m, err = c.ManagerSource.Get(mi); nil != err {
+	if m, err = c.ManagerSource.Get(user.ParseId(r.ManagerId)); nil != err {
 		return ManagerDoesNotExistError{err}
 	}
-	if uid, err = user.ParseId(r.UserId); nil != err {
-		return MalformedUserIdError{err}
+	if uid = user.ParseId(r.UserId); uid == nil {
+		return MalformedUserIdError{}
 	}
 	u := c.Factory.Make(uid, r.Passkey)
 	err = c.UserSource.Add(&u)
