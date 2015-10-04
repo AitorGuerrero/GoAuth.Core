@@ -1,9 +1,9 @@
 # GoAuth
-An application to manage authentication of users.
+The core code for an application to manage authentication of users.
 
 Made with GoLang, and intended to be implemented in a REST API, and Rabbit.
 
-An implementation of GoAut should:
+An implementation of GoAuth should:
 - Use only the entry points defined in "commands".
 - Define infrastructure structures using the interfaces. An example of basic infrastructure implementation is in 
 "implementation".
