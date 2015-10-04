@@ -51,3 +51,12 @@ func TestIfPasskeyIsNotCorrectShouldReturnError(t *t.T) {
 		t.Error(err)
 	}
 }
+
+func TestIfUserDoNotHaveAccessToNamespaceShouldReturnError (t *t.T) {
+	beforeEach()
+	req.Namespace = "incorrect/namespace"
+	_, err := com.Execute(req)
+	if _, ok := err.(IncorrectNamespaceError); !ok {
+		t.Error(err)
+	}
+}

@@ -32,6 +32,9 @@ func (c Command) Execute(req Request) (res Response, err error) {
 	if _, ok := err.(user.IncorrectPasskeyError); ok {
 		return res, IncorrectPasskeyError{err, req.Passkey}
 	}
+	if _, ok := err.(user.IncorrectNamespaceError); ok {
+		return res, IncorrectNamespaceError{err}
+	}
 
 	if(nil != err) {
 		return

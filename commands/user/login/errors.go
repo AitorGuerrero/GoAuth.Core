@@ -15,3 +15,11 @@ type IncorrectPasskeyError struct {
 func (e IncorrectPasskeyError) Error () string {
 	return "Incorrect passkey"
 }
+
+type IncorrectNamespaceError struct {
+	OriginalError error
+}
+
+func (e IncorrectNamespaceError) Error () string {
+	return "User does not have access to the namespace"
+}
