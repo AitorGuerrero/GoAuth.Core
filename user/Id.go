@@ -7,10 +7,6 @@ import (
 
 type Id uuid.UUID
 
-func (u User) Id() Id {
-	return u.id
-}
-
 func (i Id) Equal (i2 Id) bool {
 	return string(i) == string(i2)
 }

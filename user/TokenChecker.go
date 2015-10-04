@@ -14,7 +14,7 @@ func (AccessErrorToNamespace) Error() string {
 }
 
 func (tc TokenChecker) Check(u User, t Token, n Namespace) (error) {
-	if !u.HasToken() || !u.token.IsSame(t) {
+	if !u.HasToken() || !u.Token.IsSame(t) {
 		return IncorrectTokenError{}
 	}
 	if !u.hasAccessTo(n) {

@@ -24,7 +24,7 @@ func beforeEach() {
 	userFactory = user.Factory{passkeyEncryptor}
 	u = createUser()
 	com = Command{tokenChecker, &userSource}
-	req = Request{id, string(u.Token().Code), testNameSpace}
+	req = Request{id, string(u.Token.Code), testNameSpace}
 }
 
 func TestIfTheUserDoesNotExistsShouldReturnAnError (t *t.T) {

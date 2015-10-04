@@ -11,9 +11,9 @@ type Source interface {
 }
 
 type Manager struct {
-	user.User
-	Namespace user.Namespace
-	Users map[string]*user.User
+	user.User `bson:"user"`
+	Namespace user.Namespace `bson:"namespace"`
+	Users map[string]*user.User `bson:"users"`
 }
 
 func (m *Manager) AddUser(u *user.User) {

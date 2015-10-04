@@ -23,8 +23,19 @@ type Source interface {
 type User struct {
 	id Id
 	passkey Passkey
-	token Token
+	Token Token
 	namespaces []Namespace
+}
+
+func New (i Id, p Passkey) User {
+	return User{
+		id: i,
+		passkey: p,
+	}
+}
+
+func (u User) Id() Id {
+	return u.id
 }
 
 func (u User) Passkey() Passkey {
@@ -43,4 +54,12 @@ func (u User) hasAccessTo(n Namespace) bool {
 	}
 
 	return false
+}
+
+func (u User) HasToken() bool {
+	return !u.Token.IsEmpty()
+}
+
+func (u *User) GenerateToken() {
+	u.Token = GenerateToken()
 }

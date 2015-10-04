@@ -38,7 +38,7 @@ func (c Command) getTokenCodeFromUserIfCorrectLogin(uid user.Id, up string, n us
 	if nil != err {
 		return
 	}
- 	tc = u.Token().Code
+ 	tc = u.Token.Code
 
 	return
 }

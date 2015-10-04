@@ -3,6 +3,7 @@ package newManager
 import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
+	"fmt"
 )
 
 type Command struct {
@@ -31,7 +32,10 @@ func (com Command) Execute(req Request) (err error) {
 		user.Namespace(req.Namespace),
 		map[string]*user.User{},
 	}
+	fmt.Print("Manager ", m, "\n")
+	fmt.Print("User", &m.User, "\n")
 	m.GenerateToken()
+
 	err = com.Source.Add(&m)
 	if _, ok := err.(manager.ExistentNamespaceError); ok {
 		err = ExistingNamespaceError{};
