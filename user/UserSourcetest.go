@@ -19,12 +19,16 @@ var s Source
 
 type UserSourceTests struct {
 	Source func() Source
+	AfterEach func()
 }
 
 func (ut UserSourceTests) Run(t *t.T) {
 	ut.TestWhenAddingAUserIfIdExistsShouldReturnError(t)
+	ut.AfterEach()
 	ut.TestGettingAUserIfNotExistsShouldReturnAError(t)
+	ut.AfterEach()
 	ut.TestShouldReturnTheSameUserAsAdded(t)
+	ut.AfterEach()
 }
 
 func (ust UserSourceTests) beforeEach() {
@@ -35,7 +39,7 @@ func (ust UserSourceTests) beforeEach() {
 	u = New(i, p)
 }
 
-func (ust UserSourceTests) TestWhenAddingAUserIfIdExistsShouldReturnError(t *t.T) {
+func (ust UserSourceTests) TestWhenAddingAUserIfIdExistsShouldReturnError(t *t.T) { // TODO Should be private
 	ust.beforeEach()
 	u2 := New(i, p)
 	s.Add(&u)
@@ -59,10 +63,14 @@ func (ust UserSourceTests) TestShouldReturnTheSameUserAsAdded (t *t.T) {
 	s.Add(&u)
 	ru, _ := s.Get(i)
 
-	if !u.Id().Equal(ru.Id()) {
-		t.Error("Id should be the same")
-	}
-	if !u.Token.IsSame(ru.Token) {
-		t.Error("Token should be the same")
+	if(ru == nil) {
+		t.Error("User has not been saved")
+	} else {
+		if !u.Id().Equal(ru.Id()) {
+			t.Error("Id should be the same")
+		}
+		if !u.Token.IsSame(ru.Token) {
+			t.Error("Token should be the same")
+		}
 	}
 }
