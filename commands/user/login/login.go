@@ -2,6 +2,7 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
+	"fmt"
 )
 
 type Command struct {
@@ -21,10 +22,17 @@ type Response struct {
 
 func (c Command) Execute(req Request) (res Response, err error) {
 	token, err := c.getTokenFromUserIfCorrectLogin(
-		user.Id(req.Id),
+		user.ParseId(req.Id),
 		req.Passkey,
 		user.Namespace(req.Namespace),
 	)
+	if _, ok := err.(user.NotExistentUser); ok {
+		return res, UserDoesNotExist{err, req.Id}
+	}
+	if _, ok := err.(user.IncorrectPasskeyError); ok {
+		return res, IncorrectPasskeyError{err, req.Passkey}
+	}
+
 	if(nil != err) {
 		return
 	}
@@ -45,6 +53,7 @@ func (c Command) getTokenFromUserIfCorrectLogin(uid user.Id, up string, n user.N
 
 func (c Command) getUserIfCorrectLogin(uid user.Id, up string, n user.Namespace) (u *user.User, err error) {
 	u, err = c.Login.Try(uid, up, n)
+	fmt.Print("AA", err, "\n")
 	if(nil != err) {
 		return
 	}
