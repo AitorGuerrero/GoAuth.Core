@@ -4,12 +4,6 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 )
 
-type Source interface {
-	Add (*Manager) error
-	Get (i user.Id) (*Manager, error)
-	ExistsWithNamespace(user.Namespace) bool
-}
-
 type Manager struct {
 	user.User `bson:"user"`
 	Namespace user.Namespace `bson:"namespace"`
