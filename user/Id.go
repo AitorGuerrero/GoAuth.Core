@@ -6,7 +6,7 @@ import (
 
 type Id uuid.UUID
 
-func (i Id) Equal (i2 Id) bool {
+func (i Id) Equal (i2 Id) bool { // TODO Rename to IsSame
 	return uuid.Equal(uuid.UUID(i), uuid.UUID(i2))
 }
 
