@@ -11,7 +11,7 @@ func (t Token) IsSame(t2 Token) bool {
 }
 
 func (t Token) IsEmpty() bool {
-	return t == nil
+	return t.Serialize() == ""
 }
 
 func (t Token) Serialize() string {
