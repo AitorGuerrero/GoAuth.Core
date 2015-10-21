@@ -45,3 +45,11 @@ func (u User) HasToken() bool {
 func (u *User) GenerateToken() {
 	u.Token = GenerateToken()
 }
+
+func (u User) CheckToken(t Token, n Namespace) bool {
+	if !u.HasToken() || !u.Token.IsSame(t) ||!u.hasAccessTo(n) {
+		return false
+	}
+
+	return true
+}

@@ -16,13 +16,12 @@ var req Request
 var parsedId = user.ParseId(id)
 var u user.User
 var passkeyEncryptor = user.PasskeyEncryptor{userImplementation.Encryptor{}}
-var tokenChecker = user.TokenChecker{}
 
 func beforeEach() {
 	userSource = userImplementation.Source{map[string]*user.User{}}
 	userFactory = user.Factory{passkeyEncryptor}
 	u = createUser()
-	com = Command{tokenChecker, &userSource}
+	com = Command{&userSource}
 	req = Request{id, u.Token.Serialize(), testNameSpace}
 }
 

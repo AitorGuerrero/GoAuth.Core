@@ -4,7 +4,6 @@ import (
 	"github.com/AitorGuerrero/UserGo/user"
 )
 type Command struct {
-	TokenChecker user.TokenChecker
 	UserSource user.Source
 }
 
@@ -26,13 +25,8 @@ func (c Command) Execute(req Request) (error) {
 		return InvalidIdError{}
 	}
 	n := user.Namespace(req.Namespace)
-	if err = c.TokenChecker.Check(*u, user.ParseToken(req.Token), n,); nil != err {
-		if _, ok := err.(user.IncorrectTokenError); ok {
-			return IncorrectTokenError{}
-		}
-		if _, ok := err.(user.AccessErrorToNamespace); ok {
-			return AccessErrorToNamespace{}
-		}
+	if !u.CheckToken(user.ParseToken(req.Token), n) {
+		return IncorrectTokenError{}
 	}
 
 	return err
