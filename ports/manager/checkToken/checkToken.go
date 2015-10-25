@@ -25,8 +25,11 @@ func (c Command) Execute(req Request) (error) {
 		return InvalidIdError{}
 	}
 	n := user.Namespace(req.Namespace)
-	if !u.CheckToken(user.ParseToken(req.Token), n) {
+	if !u.CheckToken(user.ParseToken(req.Token)) {
 		return IncorrectTokenError{}
+	}
+	if !u.HasAccessTo(n) {
+		return AccessErrorToNamespace{}
 	}
 
 	return err
