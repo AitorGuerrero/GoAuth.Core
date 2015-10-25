@@ -1,8 +1,8 @@
 package services
 
 import (
-	implementationUser "github.com/AitorGuerrero/UserGo/implementation/user"
-	implementationManager "github.com/AitorGuerrero/UserGo/implementation/user/manager"
+	implementationUser "github.com/AitorGuerrero/UserGo/adapters/user"
+	implementationManager "github.com/AitorGuerrero/UserGo/adapters/user/manager"
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
 )

@@ -3,7 +3,7 @@ package newManager
 import (
 	t "testing"
 	"github.com/AitorGuerrero/UserGo/user"
-	"github.com/AitorGuerrero/UserGo/implementation/services"
+	"github.com/AitorGuerrero/UserGo/adapters/services"
 )
 
 var id = "dabfe523-fae0-4a1c-8923-5e51ffeb3e91"

@@ -2,7 +2,7 @@ package checkToken
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	userImplementation "github.com/AitorGuerrero/UserGo/implementation/user"
+	userImplementation "github.com/AitorGuerrero/UserGo/adapters/user"
 
 	t "testing"
 )

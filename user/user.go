@@ -28,7 +28,7 @@ func (u *User) GrantAccessTo(n Namespace) {
 	u.namespaces = append(u.namespaces, n)
 }
 
-func (u User) hasAccessTo(n Namespace) bool {
+func (u User) HasAccessTo(n Namespace) bool {
 	for _, ns := range u.namespaces {
 		if ns.Owns(n) {
 			return true
@@ -46,8 +46,8 @@ func (u *User) GenerateToken() {
 	u.Token = GenerateToken()
 }
 
-func (u User) CheckToken(t Token, n Namespace) bool {
-	if !u.HasToken() || !u.Token.IsSame(t) ||!u.hasAccessTo(n) {
+func (u User) CheckToken(t Token) bool {
+	if !u.HasToken() || !u.Token.IsSame(t) {
 		return false
 	}
 

@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	implementationUser "github.com/AitorGuerrero/UserGo/implementation/user"
+	implementationUser "github.com/AitorGuerrero/UserGo/adapters/user"
 )
 var encrypter = implementationUser.Encryptor{}
 var userPassKeyEncryptor = user.PasskeyEncryptor{encrypter}

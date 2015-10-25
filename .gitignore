@@ -1,5 +1,2 @@
 .DS_Store
 .idea
-config/config.go
-implementation/MongoDB
-implementation/Shell

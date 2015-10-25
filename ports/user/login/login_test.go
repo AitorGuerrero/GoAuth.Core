@@ -2,7 +2,7 @@ package login
 
 import (
 	"github.com/AitorGuerrero/UserGo/user"
-	testUser "github.com/AitorGuerrero/UserGo/implementation/user"
+	testUser "github.com/AitorGuerrero/UserGo/adapters/user"
 
 	t "testing"
 )

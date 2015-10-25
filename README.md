@@ -6,7 +6,7 @@ Made with GoLang, and intended to be implemented in a REST API, and Rabbit.
 An implementation of GoAuth should:
 - Use only the entry points defined in "commands".
 - Define infrastructure structures using the interfaces. An example of basic infrastructure implementation is in 
-"implementation".
+"adapters".
 
 Target specs:
 * A user is only composed by an identifier string and a passkey string. This application is not intended to store users 

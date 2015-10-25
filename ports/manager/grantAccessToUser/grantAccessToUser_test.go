@@ -3,8 +3,8 @@ package grantAccessToUser
 import (
 	"github.com/AitorGuerrero/UserGo/user"
 	"github.com/AitorGuerrero/UserGo/user/manager"
-	managerImplementation "github.com/AitorGuerrero/UserGo/implementation/user/manager"
-	userImplementation "github.com/AitorGuerrero/UserGo/implementation/user"
+	managerImplementation "github.com/AitorGuerrero/UserGo/adapters/user/manager"
+	userImplementation "github.com/AitorGuerrero/UserGo/adapters/user"
 
 	t "testing"
 )
