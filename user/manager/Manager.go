@@ -5,9 +5,9 @@ import (
 )
 
 type Manager struct {
-	user.User `bson:"user"`
-	Namespace user.Namespace `bson:"namespace"`
-	Users map[string]*user.User `bson:"users"`
+	user.User
+	Namespace user.Namespace
+	Users map[string]*user.User
 }
 
 func (m *Manager) AddUser(u *user.User) {
